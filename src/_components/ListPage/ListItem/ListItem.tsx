@@ -1,9 +1,4 @@
-import { useHooks } from './hooks'
-export type ListItemProps = {}
-
-export const ListItem = ({ ...props }: ListItemProps) => {
-  const hook = useHooks(props)
-
+export const ListItem = () => {
   return (
     <>
       <p>this is react template</p>
