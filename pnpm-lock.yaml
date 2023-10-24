@@ -91,6 +91,9 @@ devDependencies:
   autoprefixer:
     specifier: ^10
     version: 10.4.16(postcss@8.4.31)
+  chromatic:
+    specifier: ^7.5.0
+    version: 7.5.0
   commitizen:
     specifier: ^4.3.0
     version: 4.3.0(@swc/core@1.3.94)
@@ -6286,6 +6289,11 @@ packages:
   /chownr@2.0.0:
     resolution: {integrity: sha512-bIomtDF5KGpdogkLd9VspvFzk9KfpyyGlS8YFVZl7TGPBHL5snIOnxeshwVgPteQ9b4Eydl+pVbIyE1DcvCWgQ==}
     engines: {node: '>=10'}
+    dev: true
+
+  /chromatic@7.5.0:
+    resolution: {integrity: sha512-9B1rT8/L71BZTmAGXFBvKGrudnVZ4uBcGFckx0ZEMvOXboI0DOyr1/ehmSB1YmPOhu+r/7dy2jfTEzPmYcpXJg==}
+    hasBin: true
     dev: true
 
   /chrome-trace-event@1.0.3:

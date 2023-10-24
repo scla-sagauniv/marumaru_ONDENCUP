@@ -21,7 +21,8 @@
     "storybook:ci": "pnpm dlx concurrently -k -s first \"pnpm run storybook:serve\" \"pnpm run storybook:test\"",
     "commit": "cz",
     "commitlint": "commitlint -e $GIT_PARAMS",
-    "precommit": "lint-staged"
+    "precommit": "lint-staged",
+    "chromatic": "chromatic --exit-zero-on-changes ---build-script-name \"storybook:build\""
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
@@ -62,6 +63,7 @@
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "autoprefixer": "^10",
+    "chromatic": "^7.5.0",
     "commitizen": "^4.3.0",
     "cz-conventional-changelog": "^3.3.0",
     "eslint": "^8",
@@ -84,5 +86,7 @@
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
     }
-  }
+  },
+  "readme": "ERROR: No README data found!",
+  "_id": "marumaru_ondencup@0.1.0"
 }
