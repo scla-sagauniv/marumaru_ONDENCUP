@@ -4,6 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "prepare": "husky install",
     "dev": "vite",
     "build": "tsc && vite build",
     "check:lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
@@ -11,7 +12,18 @@
     "check:markuplint": "markuplint \"./src/**/*.{jsx,tsx}\"",
     "check:format": "prettier \"./src/**/*.ts\" \"./src/**/*.tsx\" --check",
     "format": "prettier \"./src/**/*.{ts,tsx}\" --write",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "commit": "cz",
+    "commitlint": "commitlint -e $GIT_PARAMS",
+    "precommit": "lint-staged"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "check:lint --dir src --fix",
+      "check:markuplint",
+      "check:typecheck",
+      "format"
+    ]
   },
   "dependencies": {
     "eslint-config-prettier": "^9.0.0",
@@ -22,6 +34,8 @@
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
+    "@commitlint/cli": "^18.0.0",
+    "@commitlint/config-conventional": "^18.0.0",
     "@markuplint/jsx-parser": "^3.11.0",
     "@markuplint/react-spec": "^3.12.0",
     "@stylistic/eslint-plugin": "^0.1.1",
@@ -30,9 +44,13 @@
     "@typescript-eslint/eslint-plugin": "^6.0.0",
     "@typescript-eslint/parser": "^6.0.0",
     "@vitejs/plugin-react-swc": "^3.3.2",
+    "commitizen": "^4.3.0",
+    "cz-conventional-changelog": "^3.3.0",
     "eslint": "^8.45.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.3",
+    "husky": "^8.0.3",
+    "lint-staged": "^15.0.2",
     "markuplint": "^3.14.0",
     "typescript": "^5.0.2",
     "vite": "^4.4.5"
@@ -40,5 +58,10 @@
   "volta": {
     "node": "21.0.0",
     "pnpm": "8.9.2"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }
