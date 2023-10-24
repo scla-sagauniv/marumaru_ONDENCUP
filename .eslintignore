@@ -43,3 +43,6 @@ storybook-static
 
 # shad/cn ui components
 /src/components/ui/*.tsx
+
+# hygen 
+_template/*
