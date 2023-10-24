@@ -6,9 +6,18 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "check:lint": "next lint",
+    "check:typecheck": "tsc --noEmit",
+    "check:markuplint": "markuplint \"./src/**/*.{jsx,tsx}\"",
+    "check:format": "prettier \"./src/**/*.ts\" \"./src/**/*.tsx\" --check",
+    "format": "prettier \"./src/**/*.{ts,tsx}\" --write",
+    "preview": "vite preview"
   },
   "dependencies": {
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-import": "^2.29.0",
+    "eslint-plugin-unused-imports": "^3.0.0",
+    "prettier": "^3.0.3",
     "react": "^18",
     "react-dom": "^18",
     "next": "13.5.6"
@@ -22,6 +31,15 @@
     "postcss": "^8",
     "tailwindcss": "^3",
     "eslint": "^8",
-    "eslint-config-next": "13.5.6"
+    "eslint-config-next": "13.5.6",
+    "@markuplint/jsx-parser": "^3.11.0",
+    "@markuplint/react-spec": "^3.12.0",
+    "@stylistic/eslint-plugin": "^0.1.1",
+    "eslint-plugin-react-refresh": "^0.4.3",
+    "markuplint": "^3.14.0"
+  },
+  "volta": {
+    "node": "21.0.0",
+    "pnpm": "8.9.2"
   }
 }

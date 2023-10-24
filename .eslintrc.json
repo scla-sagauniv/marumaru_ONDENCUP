@@ -1,3 +1,44 @@
 {
-  "extends": "next/core-web-vitals"
+  "root": true,
+  "env": { "browser": true, "es2020": true },
+  "extends": ["next/core-web-vitals", "prettier"],
+  "ignorePatterns": ["dist", ".eslintrc.json"],
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["react-refresh", "import", "unused-imports", "@stylistic"],
+  "rules": {
+    "react-refresh/only-export-components": [
+      "warn",
+      { "allowConstantExport": true }
+    ],
+    "@stylistic/quotes": ["error", "single"],
+    "@stylistic/arrow-spacing": ["error", { "before": true, "after": true }],
+    "@typescript-eslint/no-unused-vars": "off",
+    "unused-imports/no-unused-imports": "warn",
+    "import/order": [
+      "warn",
+      {
+        "groups": [
+          "builtin",
+          "external",
+          "internal",
+          "parent",
+          "sibling",
+          "index",
+          "object",
+          "type"
+        ],
+        "newlines-between": "always", // import groupsの間1行あける
+        "pathGroupsExcludedImportTypes": ["builtin"],
+        "alphabetize": { "order": "asc", "caseInsensitive": true }, // 大文字小文字関係なくアルファベット順にしたい
+        "pathGroups": [
+          // 以下のパスをGroup Optionのinternalと同じ扱いの位置にする
+          { "pattern": "@/components/**", "group": "internal", "position": "before" },
+          { "pattern": "@/api/**", "group": "internal", "position": "before" },
+          { "pattern": "@/hooks/**", "group": "internal", "position": "before" },
+          { "pattern": "@/libs/**", "group": "internal", "position": "before" },
+          { "pattern": "@/types/**", "group": "internal", "position": "before" }
+        ]
+      }
+    ]
+  }
 }
