@@ -118,7 +118,4 @@ jobs:
         run: bunx playwright install --with-deps chromium
 
       - name: Serve Storybook and run tests
-        run: bunx concurrently -k -s first
-          "bunx http-server storybook-static -a localhost -p 6006 -s"
-          "bunx wait-on http://localhost:6006 && \
-          bun run test:storybook"
+        run: bun run storybook:ci
