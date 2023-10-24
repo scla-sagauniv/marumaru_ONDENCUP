@@ -6,10 +6,6 @@
   "parser": "@typescript-eslint/parser",
   "plugins": ["react-refresh", "import", "unused-imports", "@stylistic"],
   "rules": {
-    "react-refresh/only-export-components": [
-      "warn",
-      { "allowConstantExport": true }
-    ],
     "@stylistic/quotes": ["error", "single"],
     "@stylistic/arrow-spacing": ["error", { "before": true, "after": true }],
     "@typescript-eslint/no-unused-vars": "off",
