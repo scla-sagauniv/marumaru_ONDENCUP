@@ -12,6 +12,7 @@ import {
 } from '@/_components/ui/form'
 import { Input } from '@/_components/ui/input'
 import { SignInSchema, SignInSchemaType } from '@/services/client/Signin'
+import { handleLogin } from '@/services/client/Signin/api'
 
 export default function SignInForm() {
   const defaultValues: SignInSchemaType = {
@@ -24,8 +25,9 @@ export default function SignInForm() {
     defaultValues: defaultValues,
   })
 
-  function onSubmit(values: SignInSchemaType) {
-    console.log(values)
+  async function onSubmit(values: SignInSchemaType) {
+    const res = await handleLogin(values)
+    console.log(res)
   }
 
   return (

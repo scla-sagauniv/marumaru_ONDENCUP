@@ -1,12 +1,13 @@
-import RedisStoreFactory from 'connect-redis'
 import Redis from 'ioredis'
 import nextSession from 'next-session'
-import { expressSession, promisifyStore } from 'next-session/lib/compat'
+import { promisifyStore } from 'next-session/lib/compat'
 
-const RedisStore = RedisStoreFactory(expressSession)
+import { SigninUserType } from '@/services/server/Signin'
+
+const RedisStore = require('connect-redis').default
 
 export type AppSession = {
-  name?: string
+  user?: SigninUserType
 }
 
 type NextSessionInstance = ReturnType<typeof nextSession>
