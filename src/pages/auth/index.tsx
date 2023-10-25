@@ -1,7 +1,8 @@
 import { Inter } from 'next/font/google'
 
-import { AuthForm } from './AuthForm/AuthForm'
-import { Logos } from './Logos/Logos'
+import AuthForm from '@/_components/AuthForm/AuthForm'
+import Logos from '@/_components/Logos/Logos'
+
 const inter = Inter({ subsets: ['latin'] })
 
 export default function AuthPage() {

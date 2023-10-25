@@ -7,10 +7,10 @@ import {
 } from '@/_components/ui/card'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/_components/ui/tabs'
 
-import { SignInForm } from './SignInForm/SignInForm'
-import { SignUpForm } from './SignUpForm/SignUpForm'
+import SignInForm from './SignInForm/SignInForm'
+import SignUpForm from './SignUpForm/SignUpForm'
 
-export function AuthForm() {
+export default function AuthForm() {
   return (
     <Tabs defaultValue='account' className='w-[400px]'>
       <TabsList className='grid w-full grid-cols-2'>

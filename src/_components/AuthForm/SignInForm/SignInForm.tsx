@@ -11,29 +11,28 @@ import {
   FormMessage,
 } from '@/_components/ui/form'
 import { Input } from '@/_components/ui/input'
-import { SignUpSchema, SignUpSchemaType } from '@/services/client/Signup/type'
+import { SignInSchema, SignInSchemaType } from '@/services/client/Signin'
 
-export function SignUpForm() {
-  const defaultValues: SignUpSchemaType = {
+export default function SignInForm() {
+  const defaultValues: SignInSchemaType = {
     username: '',
-    email: '',
     password: '',
   }
 
-  const signUpForm = useForm<SignUpSchemaType>({
-    resolver: zodResolver(SignUpSchema),
+  const signInForm = useForm<SignInSchemaType>({
+    resolver: zodResolver(SignInSchema),
     defaultValues: defaultValues,
   })
 
-  function onSubmit(values: SignUpSchemaType) {
+  function onSubmit(values: SignInSchemaType) {
     console.log(values)
   }
 
   return (
-    <Form {...signUpForm}>
-      <form onSubmit={signUpForm.handleSubmit(onSubmit)} className='space-y-8'>
+    <Form {...signInForm}>
+      <form onSubmit={signInForm.handleSubmit(onSubmit)} className='space-y-8'>
         <FormField
-          control={signUpForm.control}
+          control={signInForm.control}
           name='username'
           render={({ field }) => (
             <FormItem>
@@ -46,20 +45,7 @@ export function SignUpForm() {
           )}
         />
         <FormField
-          control={signUpForm.control}
-          name='email'
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Email</FormLabel>
-              <FormControl>
-                <Input type='email' placeholder='email' {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={signUpForm.control}
+          control={signInForm.control}
           name='password'
           render={({ field }) => (
             <FormItem>
@@ -71,7 +57,7 @@ export function SignUpForm() {
             </FormItem>
           )}
         />
-        <Button type='submit'>Ready to Go?</Button>
+        <Button type='submit'>Sign In</Button>
       </form>
     </Form>
   )
