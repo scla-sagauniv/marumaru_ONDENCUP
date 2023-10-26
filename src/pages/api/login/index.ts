@@ -2,7 +2,7 @@
 
 import { NextApiRequest, NextApiResponse } from 'next'
 
-import { getSession } from '@/lib/session'
+import { getSession } from '@/services/server/lib/session'
 
 export default async function handleLogin(req: NextApiRequest, res: NextApiResponse) {
   try {
