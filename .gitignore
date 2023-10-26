@@ -36,3 +36,6 @@ next-env.d.ts
 
 # storybook static
 storybook-static
+
+# docker db data
+docker/db/data
