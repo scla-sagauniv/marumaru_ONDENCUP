@@ -39,3 +39,6 @@ storybook-static
 
 # docker db data
 docker/db/data
+
+# .env(dockerとかprismaのデフォルト参照がこれなので)
+.env
