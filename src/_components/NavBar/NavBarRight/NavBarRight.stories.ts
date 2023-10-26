@@ -1,16 +1,19 @@
 import { Meta, StoryObj } from '@storybook/react'
 
-import { ListItem } from './ListItem'
+import { NavBarRight } from './NavBarRight'
 
 const meta = {
-  title: 'ListItem',
-  component: ListItem,
+  title: 'NavBarRight',
+  component: NavBarRight,
   tags: ['autodocs'],
   parameters: {
     layout: 'fullscreen',
+    nextjs: {
+      appDirectory: true,
+    },
   },
   argTypes: {},
-} satisfies Meta<typeof ListItem>
+} satisfies Meta<typeof NavBarRight>
 
 export default meta
 type Story = StoryObj<typeof meta>
