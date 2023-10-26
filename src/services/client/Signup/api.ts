@@ -1,10 +1,10 @@
-import { ApiReturnType } from '@/pages/api/signin'
-import { SigninInputType } from '@/services/server/Signin'
+import { ApiReturnType } from '@/pages/api/signup'
+import { SignupInputType } from '@/services/server/Signup'
 
 import { clientResponseHandler } from '..'
 
-export const handleLogin = async (input: SigninInputType): Promise<ApiReturnType> => {
-  const res = await fetch('/api/signin', {
+export const handleSignup = async (input: SignupInputType): Promise<ApiReturnType> => {
+  const res = await fetch('/api/signup', {
     method: 'POST',
     body: JSON.stringify(input),
   })

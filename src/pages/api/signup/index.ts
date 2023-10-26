@@ -1,13 +1,14 @@
 import { errorHandler } from '@/lib/error'
 import { ApiHandler } from '@/lib/nextUtils/api'
 import { getSession } from '@/lib/session'
-import { SigninUserType } from '@/services/server/Signin'
+import { SignupUserType } from '@/services/server/Signup'
 
-export type ApiReturnType = SigninUserType
+export type ApiReturnType = SignupUserType
 
-const handleSignin: ApiHandler<ApiReturnType> = async (req, res) => {
+const handleSignup: ApiHandler<ApiReturnType> = async (req, res) => {
   try {
     // const username = req.body.username
+    // const email = req.body.email
     // const password = req.body.password
 
     const userInfo = { email: 'return@email.com', username: 'returnUsername' }
@@ -21,4 +22,4 @@ const handleSignin: ApiHandler<ApiReturnType> = async (req, res) => {
   }
 }
 
-export default handleSignin
+export default handleSignup
