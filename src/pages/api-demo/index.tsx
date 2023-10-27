@@ -62,6 +62,13 @@ export default function ApiDemoPage() {
     setUserInfo(res.user)
   }
 
+  const signOutMutation = trpc.auth.signOut.useMutation()
+  const onSignOut = async () => {
+    const res = await signOutMutation.mutateAsync()
+    console.log(res)
+    setUserInfo(undefined)
+  }
+
   return (
     <main
       className={`flex min-h-screen flex-col items-center justify-center gap-7 p-24 ${inter.className}`}
@@ -125,6 +132,11 @@ export default function ApiDemoPage() {
       <div>
         <p style={{ color: 'white' }}>fetchUser</p>
         <FetchUser />
+      </div>
+      <div>
+        <button style={{ color: 'white' }} onClick={onSignOut}>
+          SignOut
+        </button>
       </div>
     </main>
   )

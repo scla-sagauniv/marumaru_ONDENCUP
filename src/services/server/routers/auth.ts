@@ -30,4 +30,8 @@ export const authRouter = router({
   fetchUser: procedure.query(({ ctx }) => {
     return { user: ctx.session.user }
   }),
+  signOut: procedure.mutation(({ ctx }) => {
+    ctx.session.user = undefined
+    return { user: undefined }
+  }),
 })
