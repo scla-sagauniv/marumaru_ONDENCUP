@@ -11,6 +11,7 @@ import {
   FormMessage,
 } from '@/_components/ui/form'
 import { Input } from '@/_components/ui/input'
+import { handleSignup } from '@/services/client/Signup'
 import { SignUpSchema, SignUpSchemaType } from '@/services/client/Signup/type'
 
 export default function SignUpForm() {
@@ -25,8 +26,9 @@ export default function SignUpForm() {
     defaultValues: defaultValues,
   })
 
-  function onSubmit(values: SignUpSchemaType) {
-    console.log(values)
+  async function onSubmit(values: SignUpSchemaType) {
+    const res = await handleSignup(values)
+    console.log(res)
   }
 
   return (

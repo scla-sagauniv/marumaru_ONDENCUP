@@ -1,10 +1,11 @@
 import '@/styles/globals.css'
+import { AppPropsWithLayout } from 'next/app'
+
 import { trpc } from '@/utils/trpc'
 
-import type { AppProps } from 'next/app'
-
-const MyApp = ({ Component, pageProps }: AppProps) => {
-  return <Component {...pageProps} />
+const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
+  const getLayout = Component.getLayout ?? ((page) => page)
+  return getLayout(<Component {...pageProps} />)
 }
 
 export default trpc.withTRPC(MyApp)

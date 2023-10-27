@@ -1,12 +1,14 @@
-// serverと通信するためのapi
-
-import { NextApiRequest, NextApiResponse } from 'next'
-
+import { errorHandler } from '@/lib/error'
+import { ApiHandler } from '@/lib/nextUtils/api'
 import { getSession } from '@/services/server/lib/session'
+import { SignupUserType } from '@/services/server/Signup'
 
-export default async function handleLogin(req: NextApiRequest, res: NextApiResponse) {
+export type ApiReturnType = SignupUserType
+
+const handleSignup: ApiHandler<ApiReturnType> = async (req, res) => {
   try {
     // const username = req.body.username
+    // const email = req.body.email
     // const password = req.body.password
 
     const userInfo = { email: 'return@email.com', username: 'returnUsername' }
@@ -16,6 +18,8 @@ export default async function handleLogin(req: NextApiRequest, res: NextApiRespo
 
     res.status(200).json(userInfo) // 本当はserverからの返り値を入れル！
   } catch (error) {
-    res.status(500).json('unknown error')
+    errorHandler({ error, res })
   }
 }
+
+export default handleSignup

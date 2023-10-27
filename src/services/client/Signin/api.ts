@@ -1,15 +1,13 @@
-// apiを叩くためのapi
-
+import { ApiReturnType } from '@/pages/api/signin'
 import { SigninInputType } from '@/services/server/Signin'
 
+import { clientResponseHandler } from '..'
+
 // input: signin information
-export const handleLogin = async (input: SigninInputType) => {
-  const res = await fetch('/api/login', {
+export const handleSignin = async (input: SigninInputType): Promise<ApiReturnType> => {
+  const res = await fetch('/api/signin', {
     method: 'POST',
     body: JSON.stringify(input),
   })
-  if (!res.ok) {
-    throw new Error('error')
-  }
-  return res.json()
+  return clientResponseHandler(res)
 }
