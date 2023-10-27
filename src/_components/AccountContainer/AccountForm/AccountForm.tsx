@@ -1,5 +1,6 @@
 'use client'
 import { zodResolver } from '@hookform/resolvers/zod'
+import Image from 'next/image'
 import { useForm } from 'react-hook-form'
 
 import { Button } from '@/_components/ui/button'
@@ -16,6 +17,8 @@ import { Input } from '@/_components/ui/input'
 import { toast } from '@/_components/ui/use-toast'
 import { UserOnApp, UserOnAppType } from '@/services/schema/user'
 
+import { useUploadImage } from '../hooks/useUpload'
+
 export function AccountForm() {
   // account form に必要なユーザデータを取得する
 
@@ -24,6 +27,26 @@ export function AccountForm() {
     defaultValues: {
       email: 'email@mail.com',
       name: 'name',
+      avatarUrl: 'https://avatars.githubusercontent.com/u/7525670?v=4',
+    },
+  })
+
+  const { onChangeImage, imageUrl } = useUploadImage({
+    register: form.register,
+    setValue: form.setValue,
+    name: 'avatarUrl',
+    defaultImageUrl: 'https://avatars.githubusercontent.com/u/7525670?v=4',
+    onRejected: (error) => {
+      toast({
+        title: 'Error',
+        description: form.formState.errors.avatarUrl?.message,
+      })
+    },
+    onResolved(data) {
+      toast({
+        title: 'Success',
+        description: 'アバター画像を変更しました',
+      })
     },
   })
 
@@ -37,7 +60,6 @@ export function AccountForm() {
         </pre>
       ),
     })
-    console.log(data)
   }
 
   return (
@@ -81,12 +103,16 @@ export function AccountForm() {
           />
           <FormField
             control={form.control}
-            name='email' // avatarUrlに変更
+            name='avatarUrl'
             render={() => (
               <FormItem>
                 <FormLabel className='text-slate-100'>Avatar Image</FormLabel>
                 <FormControl>
-                  <Input type='file' />
+                  <Input
+                    type='file'
+                    accept='image/png, image/jpeg'
+                    onChange={onChangeImage}
+                  />
                 </FormControl>
                 <FormDescription className='text-zinc-400'>
                   アバター画像を変更できます
@@ -95,6 +121,15 @@ export function AccountForm() {
               </FormItem>
             )}
           />
+          {imageUrl && (
+            <Image
+              src={imageUrl}
+              alt=''
+              width={100}
+              height={100}
+              className='rounded-full'
+            />
+          )}
           <Button type='submit' variant='secondary' className='mr-4'>
             Save
           </Button>
