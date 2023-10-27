@@ -1,5 +1,3 @@
-// serverと通信するためのapi
-
 import { errorHandler } from '@/lib/error'
 import { ApiHandler } from '@/lib/nextUtils/api'
 import { getSession } from '@/services/server/lib/session'
