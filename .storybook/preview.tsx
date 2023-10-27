@@ -1,5 +1,7 @@
+import React from 'react'
 import type { Preview } from '@storybook/react'
 import '../src/styles/globals.css'
+import { TrpcProvider } from '../src/utils/storybook/provider'
 
 const preview: Preview = {
   parameters: {
@@ -12,6 +14,13 @@ const preview: Preview = {
       },
     },
   },
+  decorators: [
+    (Story) => (
+      <TrpcProvider>
+        <Story />
+      </TrpcProvider>
+    ),
+  ],
 }
 
 export default preview
