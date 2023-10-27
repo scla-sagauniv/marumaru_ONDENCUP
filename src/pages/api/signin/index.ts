@@ -2,7 +2,6 @@ import { errorHandler } from '@/lib/error'
 import { ApiHandler } from '@/lib/nextUtils/api'
 import { getSession } from '@/services/server/lib/session'
 import { SigninUserType } from '@/services/server/Signin'
-// serverと通信するためのapi
 
 export type ApiReturnType = SigninUserType
 
