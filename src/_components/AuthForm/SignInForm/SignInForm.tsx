@@ -11,22 +11,24 @@ import {
   FormMessage,
 } from '@/_components/ui/form'
 import { Input } from '@/_components/ui/input'
-import { SignInSchema, SignInSchemaType } from '@/services/client/Signin'
-import { handleSignin } from '@/services/client/Signin/api'
+import { SignInReq, SignInReqType } from '@/services/schema/auth/signIn'
+import { trpc } from '@/utils/trpc'
 
 export default function SignInForm() {
-  const defaultValues: SignInSchemaType = {
-    username: '',
+  const authMutation = trpc.auth.signIn.useMutation()
+  const defaultValues: SignInReqType = {
+    email: '',
     password: '',
   }
 
-  const signInForm = useForm<SignInSchemaType>({
-    resolver: zodResolver(SignInSchema),
+  const signInForm = useForm<SignInReqType>({
+    resolver: zodResolver(SignInReq),
     defaultValues: defaultValues,
   })
 
-  async function onSubmit(values: SignInSchemaType) {
-    const res = await handleSignin(values)
+  async function onSubmit(values: SignInReqType) {
+    // const res = await handleSignin(values)
+    const res = await authMutation.mutateAsync(values)
     console.log(res)
   }
 
@@ -35,12 +37,12 @@ export default function SignInForm() {
       <form onSubmit={signInForm.handleSubmit(onSubmit)} className='space-y-8'>
         <FormField
           control={signInForm.control}
-          name='username'
+          name='email'
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Username</FormLabel>
+              <FormLabel>Email</FormLabel>
               <FormControl>
-                <Input placeholder='username' {...field} />
+                <Input placeholder='email' {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

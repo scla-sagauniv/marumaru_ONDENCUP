@@ -11,23 +11,25 @@ import {
   FormMessage,
 } from '@/_components/ui/form'
 import { Input } from '@/_components/ui/input'
-import { handleSignup } from '@/services/client/Signup'
-import { SignUpSchema, SignUpSchemaType } from '@/services/client/Signup/type'
+import { SignUpReq, SignUpReqType } from '@/services/schema/auth/signUp'
+import { trpc } from '@/utils/trpc'
 
 export default function SignUpForm() {
-  const defaultValues: SignUpSchemaType = {
-    username: '',
+  const authMutation = trpc.auth.signUp.useMutation()
+  const defaultValues: SignUpReqType = {
+    name: '',
     email: '',
     password: '',
   }
 
-  const signUpForm = useForm<SignUpSchemaType>({
-    resolver: zodResolver(SignUpSchema),
+  const signUpForm = useForm<SignUpReqType>({
+    resolver: zodResolver(SignUpReq),
     defaultValues: defaultValues,
   })
 
-  async function onSubmit(values: SignUpSchemaType) {
-    const res = await handleSignup(values)
+  async function onSubmit(values: SignUpReqType) {
+    // const res = await handleSignup(values)
+    const res = await authMutation.mutateAsync(values)
     console.log(res)
   }
 
@@ -36,7 +38,7 @@ export default function SignUpForm() {
       <form onSubmit={signUpForm.handleSubmit(onSubmit)} className='space-y-8'>
         <FormField
           control={signUpForm.control}
-          name='username'
+          name='name'
           render={({ field }) => (
             <FormItem>
               <FormLabel>Username</FormLabel>
