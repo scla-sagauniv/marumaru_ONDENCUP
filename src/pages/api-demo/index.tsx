@@ -20,13 +20,25 @@ const Healthcheck = ({ input }: { input: { name: string | undefined } }) => {
   return <p style={{ color: 'white' }}>response: {res.data.greeting}</p>
 }
 
+const FetchUser = () => {
+  const res = trpc.auth.fetchUser.useQuery()
+  if (!res.data) {
+    return <p style={{ color: 'white' }}>Loading...</p>
+  }
+  if (res.error) {
+    return <p style={{ color: 'white' }}>{res.error.message}</p>
+  }
+  console.log(res.data)
+  return <p style={{ color: 'white' }}>response: {res.data.user?.name}</p>
+}
+
 export default function ApiDemoPage() {
   const [healthValue, setHealthValue] = useState<{ name: string | undefined }>({
     name: undefined,
   })
   const [name, setName] = useState<string>('')
 
-  const [userInfo, setUserInfo] = useState<UserOnAppType | null>(null)
+  const [userInfo, setUserInfo] = useState<UserOnAppType | undefined>(undefined)
   const [signUpParam, setSignUpParam] = useState<SignUpReqType>({
     email: '',
     name: '',
@@ -109,6 +121,10 @@ export default function ApiDemoPage() {
           SignIn
         </button>
         <p style={{ color: 'white' }}>response: {userInfo?.name}</p>
+      </div>
+      <div>
+        <p style={{ color: 'white' }}>fetchUser</p>
+        <FetchUser />
       </div>
     </main>
   )

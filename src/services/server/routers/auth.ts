@@ -27,4 +27,7 @@ export const authRouter = router({
       const userOnApp = userLogic.toUserOnApp(user)
       return { user: userOnApp }
     }),
+  fetchUser: procedure.query(({ ctx }) => {
+    return { user: ctx.session.user }
+  }),
 })
