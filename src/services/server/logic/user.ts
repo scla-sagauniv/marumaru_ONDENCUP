@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client'
+import { PrismaClient, User } from '@prisma/client'
 
 import { SignUpReqType } from '@/services/schema/auth/signUp'
 import { UserOnAppType } from '@/services/schema/user'
@@ -25,4 +25,12 @@ export const findUserByEmail = async (
     },
   })
   return user
+}
+
+export const toUserOnApp = (user: User): UserOnAppType => {
+  return {
+    id: user.id,
+    name: user.name,
+    email: user.email,
+  }
 }

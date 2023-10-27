@@ -9,7 +9,9 @@ export const authRouter = router({
     .input(SignUpReq)
     .mutation(async ({ ctx, input }): Promise<SignUpResType> => {
       const user = await userLogic.createUser(input, ctx.prisma)
-      return { user: { id: user.id, name: user.name, email: user.email } }
+      const userOnApp = userLogic.toUserOnApp(user)
+      ctx.session.user = userOnApp
+      return { user: userOnApp }
     }),
   signIn: procedure
     .input(SignInReq)
@@ -21,6 +23,8 @@ export const authRouter = router({
       if (user.password !== input.password) {
         throw new Error('Password is incorrect')
       }
-      return { user: { id: user.id, name: user.name, email: user.email } }
+      ctx.session.user = userLogic.toUserOnApp(user)
+      const userOnApp = userLogic.toUserOnApp(user)
+      return { user: userOnApp }
     }),
 })
