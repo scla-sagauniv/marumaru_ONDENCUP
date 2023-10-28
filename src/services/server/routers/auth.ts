@@ -7,8 +7,13 @@ import {
   ResetPasswordReq,
   ResetPasswordResType,
 } from '@/services/schema/auth/passwordReset'
-import { SignInReq } from '@/services/schema/auth/signIn'
-import { SignUpReq, SignUpResType } from '@/services/schema/auth/signUp'
+import { SignInReq, SignInResType } from '@/services/schema/auth/signIn'
+import {
+  ConfirmEmailReq,
+  SignUpReq,
+  SignUpReqType,
+  SignUpResType,
+} from '@/services/schema/auth/signUp'
 import { procedure, router } from '@/services/server/trpc'
 
 import sendEmail from '../lib/email/send'
@@ -21,14 +26,33 @@ export const authRouter = router({
       const salt = await genSalt(10)
       const hashedPassword = await hash(input.password, salt)
       input.password = hashedPassword
-      const user = await userLogic.createUser(input, ctx.prisma)
-      const userOnApp = userLogic.toUserOnApp(user)
-      ctx.session.user = userOnApp
-      return { user: userOnApp }
+      const user = await userLogic.findUserByEmail(input.email, ctx.prisma)
+      if (user) {
+        throw new Error('User already exists')
+      }
+      const token = nanoid()
+      ctx.redisClient.set(token, JSON.stringify(input))
+      ctx.redisClient.expire(token, 60 * 10) // 10 minutes
+      const confirmUrl = `${process.env.BASE_URL}/api-demo/confirm-email?token=${token}`
+      const body = `<div>Click <a href="${confirmUrl}">here</a> to confirm your email</div>`
+      sendEmail({ tos: [input.email], subject: 'Confirm Email', body: body })
+      return { isSuccessful: true, message: 'OK' }
     }),
+  confirmEmail: procedure.input(ConfirmEmailReq).mutation(async ({ ctx, input }) => {
+    const signUpInfoStr = await ctx.redisClient.get(input.token)
+    if (!signUpInfoStr) {
+      throw new Error('Token is invalid or expired')
+    }
+    const signUpInfo = JSON.parse(signUpInfoStr) as SignUpReqType
+    const user = await userLogic.createUser(signUpInfo, ctx.prisma)
+    const userOnApp = userLogic.toUserOnApp(user)
+    ctx.session.user = userOnApp
+    ctx.redisClient.del(input.token)
+    return { user: userOnApp }
+  }),
   signIn: procedure
     .input(SignInReq)
-    .mutation(async ({ ctx, input }): Promise<SignUpResType> => {
+    .mutation(async ({ ctx, input }): Promise<SignInResType> => {
       const user = await userLogic.findUserByEmail(input.email, ctx.prisma)
       if (!user) {
         throw new Error('User not found')

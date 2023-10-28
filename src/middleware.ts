@@ -19,7 +19,10 @@ export async function middleware(request: NextRequest) {
   )
   const json = await res.json()
 
-  if (!json[0].result.data.json.user) {
+  if (
+    !json[0].result.data.json.user &&
+    request.nextUrl.pathname !== '/api-demo/confirm-email'
+  ) {
     const url = request.nextUrl.clone()
     url.pathname = '/auth'
     return NextResponse.redirect(url)

@@ -51,7 +51,6 @@ export default function ApiDemoPage() {
   const onSignUp = async () => {
     const res = await signUpMutation.mutateAsync(signUpParam)
     console.log(res)
-    setUserInfo(res.user)
   }
 
   const [signInParam, setSignInParam] = useState<SignInReqType>({
