@@ -4,7 +4,7 @@ import { SuperJSON } from 'superjson'
 
 import type { AppRouter } from '@/services/server/routers/_app'
 
-function getBaseUrl() {
+export function getBaseUrl() {
   if (typeof window !== 'undefined')
     // browser should use relative path
     return ''
