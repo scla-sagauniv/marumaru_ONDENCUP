@@ -58,6 +58,8 @@
     "@trpc/react-query": "^10.42.0",
     "@trpc/server": "^10.42.0",
     "aws-sdk": "^2.1482.0",
+    "@types/bcrypt": "^5.0.1",
+    "bcrypt": "^5.1.1",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
     "connect-redis": "^7.1.0",
