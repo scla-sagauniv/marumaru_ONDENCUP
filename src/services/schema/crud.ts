@@ -5,7 +5,7 @@ import { z } from 'zod'
 import { TodoOnApp } from './todo'
 
 export const CreateTodoReq = z.object({
-    title: z.string(),
+    title: z.string().min(1),
     content: z.string().nullable(),
     startTime: z.date().nullable(),
     endTime: z.date().nullable(), 
