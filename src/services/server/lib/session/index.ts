@@ -2,12 +2,12 @@ import Redis from 'ioredis'
 import nextSession from 'next-session'
 import { promisifyStore } from 'next-session/lib/compat'
 
-import { SigninUserType } from '@/services/server/Signin'
+import { UserOnAppType } from '@/services/schema/user'
 
 const RedisStore = require('connect-redis').default
 
 export type AppSession = {
-  user?: SigninUserType
+  user?: UserOnAppType
 }
 
 type NextSessionInstance = ReturnType<typeof nextSession>
@@ -19,7 +19,9 @@ export const getSession: (
 ) => Promise<GetSessionReturn & AppSession> = nextSession({
   store: promisifyStore(
     new RedisStore({
-      client: new Redis(),
+      client: new Redis(
+        process.env.REDIS_URL ? process.env.REDIS_URL : 'redis://127.0.0.1:6379',
+      ),
     }),
   ),
   cookie: {

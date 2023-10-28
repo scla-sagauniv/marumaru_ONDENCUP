@@ -16,6 +16,7 @@ model User {
   email     String    @unique
   name      String
   password  String
+  avatarUrl String    @default("https://http.cat/101")
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   deletedAt DateTime?
