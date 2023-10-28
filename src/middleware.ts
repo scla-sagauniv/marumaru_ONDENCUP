@@ -10,7 +10,7 @@ export async function middleware(request: NextRequest) {
   // だから、Nextの機能使ってcookie取得してfetchで無理やりcookie送るしかないのかな。。。
   const cookie = request.cookies.get('sid')
   const res = await fetch(
-    'http://localhost:8080/api/trpc/auth.fetchUser?batch=1&input={}',
+    `${process.env.BASE_URL}/api/trpc/auth.fetchUser?batch=1&input={}`,
     {
       headers: {
         Cookie: `sid=${cookie?.value}`,
