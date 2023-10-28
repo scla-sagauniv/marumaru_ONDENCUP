@@ -1,11 +1,11 @@
 import { PrismaClient, Todo } from '@prisma/client'
 
-import { CreateTodoReqType, UpdateTodoReqType} from '@/services/schema/crud'
+import { CreateTodoReqType, UpdateTodoReqType } from '@/services/schema/crud'
 import { TodoOnAppType } from '@/services/schema/todo'
 
 // create
 export const createTodo = async (params: CreateTodoReqType, prisma: PrismaClient) => {
-  const { title, content, startTime, endTime, lavel, userId} = params
+  const { title, content, startTime, endTime, lavel, userId } = params
   const todo = await prisma.todo.create({
     data: {
       title,
@@ -20,7 +20,7 @@ export const createTodo = async (params: CreateTodoReqType, prisma: PrismaClient
 }
 
 // read
-export const getAllTodo = async (id: TodoOnAppType['userId'], prisma: PrismaClient,) => {
+export const getAllTodo = async (id: TodoOnAppType['userId'], prisma: PrismaClient) => {
   const todo = await prisma.todo.findMany({
     where: {
       userId: id,
@@ -30,8 +30,12 @@ export const getAllTodo = async (id: TodoOnAppType['userId'], prisma: PrismaClie
 }
 // update
 
-export const updateTodo = async (id: TodoOnAppType['id'], params: UpdateTodoReqType, prisma: PrismaClient) => {
-  const { title, content, startTime, endTime, lavel, status} = params
+export const updateTodo = async (
+  id: TodoOnAppType['id'],
+  params: UpdateTodoReqType,
+  prisma: PrismaClient,
+) => {
+  const { title, content, startTime, endTime, lavel, status } = params
   const todo = await prisma.todo.update({
     where: {
       id: id,
@@ -51,9 +55,9 @@ export const updateTodo = async (id: TodoOnAppType['id'], params: UpdateTodoReqT
 
 export const deleteTodo = async (id: TodoOnAppType['id'], prisma: PrismaClient) => {
   const todo = prisma.todo.delete({
-      where: {
-        id: id
-      },
+    where: {
+      id: id,
+    },
   })
   return todo
 }

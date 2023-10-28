@@ -18,7 +18,7 @@ export const appRouter = router({
       }
     }),
   auth: authRouter,
-  todo: todoRouter ,
+  todo: todoRouter,
 })
 
 export type AppRouter = typeof appRouter
