@@ -1,4 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
 
 import { Button } from '@/_components/ui/button'
@@ -15,6 +16,7 @@ import { SignInReq, SignInReqType } from '@/services/schema/auth/signIn'
 import { trpc } from '@/utils/trpc'
 
 export default function SignInForm() {
+  const router = useRouter()
   const authMutation = trpc.auth.signIn.useMutation()
   const defaultValues: SignInReqType = {
     email: '',
@@ -27,9 +29,8 @@ export default function SignInForm() {
   })
 
   async function onSubmit(values: SignInReqType) {
-    // const res = await handleSignin(values)
     const res = await authMutation.mutateAsync(values)
-    console.log(res)
+    router.push(`/user/board/${res.user.id}`)
   }
 
   return (

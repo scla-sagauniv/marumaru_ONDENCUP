@@ -39,7 +39,6 @@ const todos: GetTodosType = [
 ]
 
 const BoardPage: NextPageWithLayout = () => {
-  // const router = useRouter()
   return <TodoBoard todos={todos} />
 }
 BoardPage.getLayout = (page) => <Layout>{page}</Layout>
