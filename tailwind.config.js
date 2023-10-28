@@ -70,6 +70,9 @@ module.exports = {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
       },
+      fontSize: {
+        h1: 'scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl',
+      },
     },
   },
   plugins: [require('tailwindcss-animate')],

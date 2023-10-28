@@ -1,0 +1,20 @@
+version: '3.7'
+
+services:
+  db:
+    container_name: onden-db
+    build:
+      context: ./
+      dockerfile: ./docker/db/Dockerfile
+    ports:
+      - ${MYSQL_PORT}:${MYSQL_PORT}
+    volumes:
+      - ./docker/db/data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+  redis:
+    image: redis:7.0-alpine
+    container_name: onden-redis
+    ports:
+      - ${REDIS_PORT}:${REDIS_PORT}
