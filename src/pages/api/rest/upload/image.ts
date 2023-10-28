@@ -31,7 +31,7 @@ export default async function handler(
   const client = new S3Client({ region: 'ap-northeast-1' })
 
   const Conditions = [
-    { acl: 'public-read' },
+    { acl: 'public-read', 'Content-Type': fileType },
     { bucket: 'marumaru-ondencup' },
     ['starts-with', '$key', `marumaru/${fileName}`],
     ['content-length-range', 0, 1048576], // up to 1 MB
