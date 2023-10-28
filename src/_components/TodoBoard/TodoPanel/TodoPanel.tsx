@@ -11,12 +11,16 @@ import {
   useSensors,
 } from '@dnd-kit/core'
 import { arrayMove, sortableKeyboardCoordinates } from '@dnd-kit/sortable'
+import { PlusIcon } from 'lucide-react'
 import { useState } from 'react'
 
+import { Button } from '@/_components/ui/button'
 import { GetTodoType, GetTodosType } from '@/services/server/GetTodos'
+import { trpc } from '@/utils/trpc'
 
 import { SortableContainer } from './SortableContainer'
 import { TodoItem } from './TodoItem'
+import { TodoModal } from './TodoModal/TodoModal'
 
 type TodoBoardProps = {
   todos: GetTodosType
@@ -32,6 +36,8 @@ export function TodoPanel({ todos }: TodoBoardProps) {
   const newTodos = todos.filter((todo) => todo.status === 'new')
   const doingTodos = todos.filter((todo) => todo.status === 'doing')
   const doneTodos = todos.filter((todo) => todo.status === 'done')
+
+  const createTodoMutation = trpc.todo.createTodo.useMutation()
 
   const [items, setItems] = useState<TodoContainers>({
     new: newTodos,
@@ -213,10 +219,15 @@ export function TodoPanel({ todos }: TodoBoardProps) {
         onDragOver={handleDragOver}
         onDragEnd={handleDragEnd}
       >
-        <SortableContainer id='new' label='🐣New' items={items.new} />
+        <SortableContainer id='new' label='🐣New' items={items.new}>
+          <TodoModal>
+            <Button size='icon' className='rounded-full'>
+              <PlusIcon />
+            </Button>
+          </TodoModal>
+        </SortableContainer>
         <SortableContainer id='doing' label='🏗️Doing' items={items.doing} />
         <SortableContainer id='done' label='💯Done' items={items.done} />
-        {/* DragOverlay */}
         <DragOverlay>
           {activeId ? <TodoItem id={activeId} findTodoItem={findTodoItem} /> : null}
         </DragOverlay>
