@@ -20,7 +20,7 @@ import { UserOnApp, UserOnAppType } from '@/services/schema/user'
 
 import { useUploadImage } from '../hooks/useUpload'
 
-export function AccountForm({ userId }: { userId: string }) {
+export function AccountForm({ userId }: { userId: string | string[] | undefined }) {
   const router = useRouter()
   // account form に必要なユーザデータを取得する
 
