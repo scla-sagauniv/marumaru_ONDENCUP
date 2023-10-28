@@ -1,13 +1,7 @@
-import {
-  CreateTodoReq,
-  GetTodoReq,
-  UpdateTodoReq,
-  DeleteTodoReq,
-  CreateTodoResType,
-  GetTodoResType,
-  UpdateTodoResType,
-  DeleteTodoResType,
-} from '@/services/schema/crud'
+import { CreateTodoReq, CreateTodoResType } from '@/services/schema/todo/create'
+import { DeleteTodoReq, DeleteTodoResType } from '@/services/schema/todo/delete'
+import { GetTodoReq, GetTodoResType } from '@/services/schema/todo/read'
+import { UpdateTodoReq, UpdateTodoResType } from '@/services/schema/todo/update'
 import { procedure, router } from '@/services/server/trpc'
 
 import * as todoLogic from '../logic/todo'

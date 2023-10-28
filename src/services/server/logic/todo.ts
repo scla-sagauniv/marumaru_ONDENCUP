@@ -1,7 +1,8 @@
 import { PrismaClient, Todo, User } from '@prisma/client'
 
-import { CreateTodoReqType, UpdateTodoReqType } from '@/services/schema/crud'
 import { TodoOnAppType } from '@/services/schema/todo'
+import { CreateTodoReqType } from '@/services/schema/todo/create'
+import { UpdateTodoReqType } from '@/services/schema/todo/update'
 
 // create
 export const createTodo = async (
