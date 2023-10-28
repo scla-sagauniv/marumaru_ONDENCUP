@@ -17,19 +17,21 @@ import {
 import { Input } from '@/_components/ui/input'
 import { toast } from '@/_components/ui/use-toast'
 import { UserOnApp, UserOnAppType } from '@/services/schema/user'
+import { trpc } from '@/utils/trpc'
 
 import { useUploadImage } from '../hooks/useUpload'
 
 export function AccountForm({ userId }: { userId: string | string[] | undefined }) {
   const router = useRouter()
   // account form に必要なユーザデータを取得する
+  const user = trpc.auth.fetchUser.useQuery()
 
   const form = useForm<Omit<UserOnAppType, 'id'>>({
     resolver: zodResolver(UserOnApp.omit({ id: true })),
     defaultValues: {
-      email: 'email@mail.com',
-      name: 'name',
-      avatarUrl: 'https://avatars.githubusercontent.com/u/7525670?v=4',
+      email: !user.data ? 'loading...' : user.data.user?.email,
+      name: !user.data ? 'loading...' : user.data.user?.name,
+      avatarUrl: !user.data ? 'loading...' : user.data.user?.avatarUrl,
     },
   })
 

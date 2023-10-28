@@ -1,5 +1,5 @@
-import { Link } from 'lucide-react'
-import router from 'next/router'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
 
 import { Avatar, AvatarImage, AvatarFallback } from '@/_components/ui/avatar'
 import { Button } from '@/_components/ui/button'
@@ -13,8 +13,12 @@ import {
   DropdownMenuItem,
   DropdownMenuShortcut,
 } from '@/_components/ui/dropdown-menu'
+import { trpc } from '@/utils/trpc'
 
 export const NavBarRight = () => {
+  const user = trpc.auth.fetchUser.useQuery().data?.user
+  const signOutMutation = trpc.auth.signOut.useMutation()
+  const router = useRouter()
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -29,16 +33,19 @@ export const NavBarRight = () => {
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <Link href={'/account'}>
+          <Link href={`/user/account/${user?.id}`}>
             <DropdownMenuItem>Profile</DropdownMenuItem>
           </Link>
-          <DropdownMenuItem>Settings</DropdownMenuItem>
+          <Link href={`/user/account/${user?.id}`}>
+            <DropdownMenuItem>Settings</DropdownMenuItem>
+          </Link>
         </DropdownMenuGroup>
 
         <DropdownMenuSeparator />
         <Button
-          onClick={() => {
-            router.push('/api/auth/logout')
+          onClick={async () => {
+            await signOutMutation.mutateAsync()
+            router.reload()
           }}
           variant={'ghost'}
         >

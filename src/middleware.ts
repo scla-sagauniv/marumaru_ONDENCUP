@@ -25,9 +25,7 @@ export async function middleware(request: NextRequest) {
     const url = request.nextUrl.clone()
     url.pathname = '/auth'
     return NextResponse.redirect(url)
-  } else if (request.url.includes('/confirm/email')) {
-    return NextResponse.redirect(new URL(`/user/board/${user.id}`))
-  } else {
+  } else if (request.nextUrl.pathname.startsWith('/confirm/email')) {
     return NextResponse.redirect(new URL(`/user/board/${user.id}`))
   }
 }
