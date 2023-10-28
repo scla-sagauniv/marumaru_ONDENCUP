@@ -2,14 +2,14 @@ import { useDroppable } from '@dnd-kit/core'
 import { SortableContext, rectSortingStrategy } from '@dnd-kit/sortable'
 
 import { Card, CardHeader, CardTitle, CardContent } from '@/_components/ui/card'
-import { GetTodosType } from '@/services/server/GetTodos/api'
 
+import { TodoFormType } from '../../TodoBoard'
 import { SortableTodoItem } from '../SortableTodoItem'
 
 export type SortableContainerProps = {
   id: string
   label: string
-  items: GetTodosType
+  items: TodoFormType[]
 }
 
 const SortableContainer = ({ id, label, items }: SortableContainerProps) => {

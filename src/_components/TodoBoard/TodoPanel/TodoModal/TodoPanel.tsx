@@ -13,25 +13,24 @@ import {
 import { arrayMove, sortableKeyboardCoordinates } from '@dnd-kit/sortable'
 import { useState } from 'react'
 
-import { GetTodoType, GetTodosType } from '@/services/server/GetTodos'
-
-import { SortableContainer } from './SortableContainer'
-import { TodoItem } from './TodoItem'
-
-type TodoBoardProps = {
-  todos: GetTodosType
-}
+import { TodoFormType } from '../../TodoBoard'
+import { SortableContainer } from '../SortableContainer'
+import { TodoItem } from '../TodoItem'
 
 interface TodoContainers {
-  new: GetTodosType
-  doing: GetTodosType
-  done: GetTodosType
+  new: TodoFormType[]
+  doing: TodoFormType[]
+  done: TodoFormType[]
+}
+
+type TodoBoardProps = {
+  todos: TodoFormType[]
 }
 
 export function TodoPanel({ todos }: TodoBoardProps) {
-  const newTodos = todos.filter((todo) => todo.status === 'new')
-  const doingTodos = todos.filter((todo) => todo.status === 'doing')
-  const doneTodos = todos.filter((todo) => todo.status === 'done')
+  const newTodos = todos.filter((todo) => todo.status === 'OPEN')
+  const doingTodos = todos.filter((todo) => todo.status === 'DOING')
+  const doneTodos = todos.filter((todo) => todo.status === 'DONE')
 
   const [items, setItems] = useState<TodoContainers>({
     new: newTodos,
@@ -40,7 +39,7 @@ export function TodoPanel({ todos }: TodoBoardProps) {
   })
 
   //リストのリソースid（リストの値）
-  const [activeId, setActiveId] = useState<string | undefined>(undefined)
+  const [activeId, setActiveId] = useState<number | undefined>(undefined)
 
   // ドラッグの開始、移動、終了などにどのような入力を許可するかを決めるprops
   const mouseSensor = useSensor(MouseSensor, {
@@ -57,7 +56,7 @@ export function TodoPanel({ todos }: TodoBoardProps) {
   )
 
   // どのコンテナに居るのか取得する関数
-  const findContainer = (id: string) => {
+  const findContainer = (id: number) => {
     console.log('👍id is ' + id)
 
     if (id in items) {
@@ -77,7 +76,7 @@ export function TodoPanel({ todos }: TodoBoardProps) {
     }
   }
 
-  const findTodoItem = (id: string) => {
+  const findTodoItem = (id: number) => {
     const containerKeys = Object.keys(items)
     for (const key of containerKeys) {
       const container = items[key as keyof typeof items]
@@ -93,7 +92,7 @@ export function TodoPanel({ todos }: TodoBoardProps) {
     const { active } = event
     //ドラッグしたリソースのid
     const id = active.id
-    setActiveId(id as string)
+    setActiveId(id as number)
   }
 
   //ドラッグ可能なアイテムがドロップ可能なコンテナの上に移動時に発火する関数
@@ -113,8 +112,8 @@ export function TodoPanel({ todos }: TodoBoardProps) {
 
     // ドラッグ、ドロップ時のコンテナ取得
     // new,doing,doneのいずれかを持つ
-    const activeContainer = findContainer(id as string)
-    const overContainer = findContainer(over?.id as string)
+    const activeContainer = findContainer(id as number)
+    const overContainer = findContainer(over?.id as number)
 
     console.log('activeContainer is ' + activeContainer)
     console.log('overContainer is ' + overContainer)
@@ -136,8 +135,8 @@ export function TodoPanel({ todos }: TodoBoardProps) {
       console.log('👍overItems' + overItems)
 
       // 配列のインデックス取得
-      const activeIndex = activeItems.findIndex((item: GetTodoType) => item.id === id)
-      const overIndex = overItems.findIndex((item: GetTodoType) => item.id === overId)
+      const activeIndex = activeItems.findIndex((item: TodoFormType) => item.id === id)
+      const overIndex = overItems.findIndex((item: TodoFormType) => item.id === overId)
 
       let newIndex
       if (overId in prev[overContainer]) {
@@ -156,7 +155,7 @@ export function TodoPanel({ todos }: TodoBoardProps) {
       return {
         ...prev,
         [activeContainer]: [
-          ...prev[activeContainer].filter((item: GetTodoType) => item.id !== active.id),
+          ...prev[activeContainer].filter((item: TodoFormType) => item.id !== active.id),
         ],
         [overContainer]: [
           ...prev[overContainer].slice(0, newIndex),
@@ -179,16 +178,16 @@ export function TodoPanel({ todos }: TodoBoardProps) {
 
     // ドラッグ、ドロップ時のコンテナ取得
     // yet,doing,doneのいずれかを持つ
-    const activeContainer = findContainer(id as string)
-    const overContainer = findContainer(over?.id as string)
+    const activeContainer = findContainer(id as number)
+    const overContainer = findContainer(over?.id as number)
 
     // 配列のインデックス取得
     // ！マークは、nullやundefinedを除外するための非nullアサーション演算子
     const activeIndex = items[activeContainer!].findIndex(
-      (item: GetTodoType) => item.id === id,
+      (item: TodoFormType) => item.id === id,
     )
     const overIndex = items[overContainer!].findIndex(
-      (item: GetTodoType) => item.id === overId,
+      (item: TodoFormType) => item.id === overId,
     )
 
     console.log('👍activeIndex' + activeIndex)

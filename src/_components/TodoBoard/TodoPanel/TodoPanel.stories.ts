@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react'
 
-import { TodoPanel } from './TodoPanel'
+import { TodoPanel } from './TodoModal/TodoPanel'
 
 const meta = {
   title: 'TodoPanel',

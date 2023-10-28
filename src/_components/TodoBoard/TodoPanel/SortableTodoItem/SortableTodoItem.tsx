@@ -1,12 +1,12 @@
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 
-import { GetTodoType } from '@/services/server/GetTodos'
-
+import { TodoFormType } from '../../TodoBoard'
 import { TodoItem } from '../TodoItem'
+import { TodoModal } from '../TodoModal'
 
 type SortableTodoItemProps = {
-  todo: GetTodoType
+  todo: TodoFormType
 }
 
 export const SortableTodoItem = ({ todo }: SortableTodoItemProps) => {
@@ -16,19 +16,21 @@ export const SortableTodoItem = ({ todo }: SortableTodoItemProps) => {
 
   return (
     <>
-      <div
-        className=''
-        ref={setNodeRef}
-        style={{
-          transform: CSS.Transform.toString(transform),
-          transition,
-          zIndex: isDragging ? 1 : 0,
-        }}
-        {...attributes}
-        {...listeners}
-      >
-        <TodoItem todo={todo} />
-      </div>
+      <TodoModal>
+        <div
+          className=''
+          ref={setNodeRef}
+          style={{
+            transform: CSS.Transform.toString(transform),
+            transition,
+            zIndex: isDragging ? 1 : 0,
+          }}
+          {...attributes}
+          {...listeners}
+        >
+          <TodoItem todo={todo} />
+        </div>
+      </TodoModal>
     </>
   )
 }

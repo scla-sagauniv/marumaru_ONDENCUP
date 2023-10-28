@@ -1,12 +1,72 @@
+import { Status } from '@prisma/client'
+import { z } from 'zod'
+
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/_components/ui/tabs'
-import { GetTodosType } from '@/services/server/GetTodos'
 
-import { TodoPanel } from './TodoPanel/TodoPanel'
+import { TodoPanel } from './TodoPanel/TodoModal/TodoPanel'
 
-type TodoBoardProps = {
-  todos: GetTodosType
-}
-export function TodoBoard({ todos }: TodoBoardProps) {
+const formSchema = z.object({
+  id: z.number(),
+  title: z.string(),
+  content: z.string().nullable(),
+  startTime: z.date().nullable(),
+  endTime: z.date().nullable(),
+  status: z.nativeEnum(Status),
+})
+
+export type TodoFormType = z.infer<typeof formSchema>
+
+export function TodoBoard() {
+  const todos: TodoFormType[] = [
+    {
+      id: 1,
+      status: 'OPEN',
+      title: 'title',
+      content: 'content',
+      startTime: new Date('2021-01-01'),
+      endTime: new Date('2021-01-01'),
+    },
+    {
+      id: 2,
+      status: 'OPEN',
+      title: 'title',
+      content: 'content',
+      startTime: new Date('2021-01-01'),
+      endTime: new Date('2021-01-01'),
+    },
+    {
+      id: 3,
+      status: 'OPEN',
+      title: 'title',
+      content: 'content',
+      startTime: new Date('2021-01-01'),
+      endTime: new Date('2021-01-01'),
+    },
+    {
+      id: 4,
+      status: 'OPEN',
+      title: 'title',
+      content: 'content',
+      startTime: new Date('2021-01-01'),
+      endTime: new Date('2021-01-01'),
+    },
+    {
+      id: 5,
+      status: 'OPEN',
+      title: 'title',
+      content: 'content',
+      startTime: new Date('2021-01-01'),
+      endTime: new Date('2021-01-01'),
+    },
+    {
+      id: 6,
+      status: 'OPEN',
+      title: 'title',
+      content: 'content',
+      startTime: new Date('2021-01-01'),
+      endTime: new Date('2021-01-01'),
+    },
+  ]
   return (
     <Tabs defaultValue='panel' className='w-full h-full'>
       <TabsList className='grid w-1/3 grid-cols-2 bg-zinc-700'>
