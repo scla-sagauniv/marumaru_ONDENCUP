@@ -67,6 +67,28 @@ export const deleteTodo = async (id: TodoOnAppType['id'], prisma: PrismaClient) 
   return todo
 }
 
+// 締め切りがギリなtodoのrecordを取得、titleとemailを取得
+export const getDeadlineTodo = async (prisma: PrismaClient) => {
+  const today = new Date(Date.now())
+  const todo = await prisma.todo.findMany({
+    where: {
+      endTime: {
+        gte: today,
+        lt: new Date(today.getTime() + 24 * 60 * 60 * 1000),
+      },
+    },
+    select: {
+      title: true,
+      user: {
+        select: {
+          email: true,
+        },
+      },
+    },
+  })
+  return todo || undefined
+}
+
 export const toTodoOnApp = (todo: Todo): TodoOnAppType => {
   return {
     id: todo.id,
