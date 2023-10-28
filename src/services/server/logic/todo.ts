@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client'
+import { PrismaClient, Todo } from '@prisma/client'
 
 import { CreateTodoReqType, UpdateTodoReqType} from '@/services/schema/crud'
 import { TodoOnAppType } from '@/services/schema/todo'
@@ -56,4 +56,17 @@ export const deleteTodo = async (id: TodoOnAppType['id'], prisma: PrismaClient) 
       },
   })
   return todo
+}
+
+export const toTodoOnApp = (todo: Todo): TodoOnAppType => {
+  return {
+    id: todo.id,
+    title: todo.title,
+    content: todo.content,
+    startTime: todo.startTime,
+    endTime: todo.endTime,
+    lavel: todo.lavel,
+    status: todo.status,
+    userId: todo.userId,
+  }
 }
