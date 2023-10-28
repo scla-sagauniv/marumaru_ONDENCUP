@@ -9,6 +9,8 @@ import {
 } from '@/_components/ui/card'
 import { GetTodoType } from '@/services/server/GetTodos'
 
+import { TodoModal } from '../TodoModal'
+
 type TodoItemProps = {
   id?: string
   todo?: GetTodoType
@@ -21,19 +23,21 @@ export const TodoItem = ({ todo, id, findTodoItem }: TodoItemProps) => {
   return (
     <>
       {todoItem && (
-        <Card className='w-full my-5 bg-zinc-800 border-zinc-600 text-slate-100'>
-          <CardHeader>
-            <CardTitle>{todoItem.id}</CardTitle>
-            <h4 className='text-sm text-slate-100'>Details</h4>
-            <CardDescription>{todoItem.description}</CardDescription>
-          </CardHeader>
-          <CardFooter className='flex justify-between'>
-            <h4 className='text-sm text-slate-100'>Deadline</h4>
-            <p>
-              <Calendar /> {todoItem.deadline}
-            </p>
-          </CardFooter>
-        </Card>
+        <TodoModal>
+          <Card className='w-full my-5 bg-zinc-800 border-zinc-600 text-slate-100'>
+            <CardHeader>
+              <CardTitle>{todoItem.id}</CardTitle>
+              <h4 className='text-sm text-slate-100'>Details</h4>
+              <CardDescription>{todoItem.description}</CardDescription>
+            </CardHeader>
+            <CardFooter className='flex justify-between'>
+              <h4 className='text-sm text-slate-100'>Deadline</h4>
+              <p>
+                <Calendar /> {todoItem.deadline}
+              </p>
+            </CardFooter>
+          </Card>
+        </TodoModal>
       )}
     </>
   )

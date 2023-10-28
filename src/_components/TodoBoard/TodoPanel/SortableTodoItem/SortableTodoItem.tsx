@@ -4,7 +4,6 @@ import { CSS } from '@dnd-kit/utilities'
 import { GetTodoType } from '@/services/server/GetTodos'
 
 import { TodoItem } from '../TodoItem'
-import { TodoModal } from '../TodoModal'
 
 type SortableTodoItemProps = {
   todo: GetTodoType
@@ -28,9 +27,7 @@ export const SortableTodoItem = ({ todo }: SortableTodoItemProps) => {
         {...attributes}
         {...listeners}
       >
-        <TodoModal>
-          <TodoItem todo={todo} />
-        </TodoModal>
+        <TodoItem todo={todo} />
       </div>
     </>
   )
