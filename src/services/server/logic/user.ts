@@ -27,6 +27,15 @@ export const findUserByEmail = async (
   return user
 }
 
+export const findUserById = async (id: UserOnAppType['id'], prisma: PrismaClient) => {
+  const user = await prisma.user.findUnique({
+    where: {
+      id: id,
+    },
+  })
+  return user
+}
+
 export const toUserOnApp = (user: User): UserOnAppType => {
   return {
     id: user.id,
