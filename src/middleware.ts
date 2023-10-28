@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 
+import { UserOnAppType } from './services/schema/user'
+
 export const config = {
   matcher: ['/api-demo/:path*', '/todo/:path*'],
 }
@@ -17,11 +19,13 @@ export async function middleware(request: NextRequest) {
       },
     },
   )
-  const json = await res.json()
+  const user: UserOnAppType | undefined = (await res.json())[0].result.data.user
 
-  if (json[0].result.data.user === undefined) {
+  if (user === undefined) {
     const url = request.nextUrl.clone()
     url.pathname = '/auth'
     return NextResponse.redirect(url)
+  } else if (request.url.includes('/confirm/email')) {
+    return NextResponse.redirect(new URL(`/user/board/${user.id}`))
   }
 }
