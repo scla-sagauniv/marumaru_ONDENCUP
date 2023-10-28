@@ -9,7 +9,6 @@ export const CreateTodoReq = z.object({
   startTime: z.date().nullable(),
   endTime: z.date().nullable(),
   lavel: z.string().nullable(),
-  userId: z.number(),
 })
 
 export type CreateTodoReqType = z.infer<typeof CreateTodoReq>

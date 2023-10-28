@@ -16,7 +16,11 @@ export const todoRouter = router({
   createTodo: procedure
     .input(CreateTodoReq)
     .mutation(async ({ ctx, input }): Promise<CreateTodoResType> => {
-      const todo = await todoLogic.createTodo(input, ctx.prisma)
+      const user = ctx.session.user
+      if (!user) {
+        throw new Error('User not found')
+      }
+      const todo = await todoLogic.createTodo(input, user.id, ctx.prisma)
       const todoOnApp = todoLogic.toTodoOnApp(todo)
       return { todo: todoOnApp }
     }),
