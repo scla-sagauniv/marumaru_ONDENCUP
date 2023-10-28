@@ -1,6 +1,9 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { httpBatchLink } from '@trpc/client'
 import React, { ReactNode, useState } from 'react'
+import SuperJSON from 'superjson'
+
+import { getBaseUrl } from '../trpc'
 
 import { trpc } from './trpc'
 
@@ -12,14 +15,10 @@ export const TrpcProvider = ({ children }: TrpcProviderProps) => {
     trpc.createClient({
       links: [
         httpBatchLink({
-          url: `${process.env.NEXT_PUBLIC_BASE_URL}/api/trpc`,
-
-          // You can pass any HTTP headers you wish here
-          async headers() {
-            return {}
-          },
+          url: `${getBaseUrl()}/api/trpc`,
         }),
       ],
+      transformer: SuperJSON,
     }),
   )
 
