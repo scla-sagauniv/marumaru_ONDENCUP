@@ -22,7 +22,6 @@ export default function ApiDemoPage2() {
     startTime: null,
     endTime: null,
     lavel: '',
-    userId: -1,
   })
   const getTodoParam: GetTodoReqType = {
     id: 1,
@@ -113,14 +112,6 @@ export default function ApiDemoPage2() {
             setCreateTodoParam({ ...createTodoParam, lavel: e.target.value })
           }
           placeholder='lavel'
-        />
-        <input
-          type='number'
-          value={createTodoParam.userId}
-          onChange={(e) =>
-            setCreateTodoParam({ ...createTodoParam, userId: parseInt(e.target.value) })
-          }
-          placeholder='userId'
         />
         <button
           style={{ color: 'white', marginLeft: '10px' }}
