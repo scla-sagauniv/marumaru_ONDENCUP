@@ -10,22 +10,31 @@ import {
 import { GetTodoType } from '@/services/server/GetTodos'
 
 type TodoItemProps = {
-  todo: GetTodoType
+  id?: string
+  todo?: GetTodoType
+  findTodoItem?: (id: string) => GetTodoType | undefined
 }
-export const TodoItem = ({ todo }: TodoItemProps) => {
+
+export const TodoItem = ({ todo, id, findTodoItem }: TodoItemProps) => {
+  const todoItem = todo ? todo : findTodoItem!(id!)
+
   return (
-    <Card className='w-full my-5 bg-zinc-800 border-zinc-600 text-slate-100'>
-      <CardHeader>
-        <CardTitle>{todo.id}</CardTitle>
-        <h4 className='text-sm text-slate-100'>Details</h4>
-        <CardDescription>{todo.description}</CardDescription>
-      </CardHeader>
-      <CardFooter className='flex justify-between'>
-        <h4 className='text-sm text-slate-100'>Deadline</h4>
-        <p>
-          <Calendar /> {todo.deadline}
-        </p>
-      </CardFooter>
-    </Card>
+    <>
+      {todoItem && (
+        <Card className='w-full my-5 bg-zinc-800 border-zinc-600 text-slate-100'>
+          <CardHeader>
+            <CardTitle>{todoItem.id}</CardTitle>
+            <h4 className='text-sm text-slate-100'>Details</h4>
+            <CardDescription>{todoItem.description}</CardDescription>
+          </CardHeader>
+          <CardFooter className='flex justify-between'>
+            <h4 className='text-sm text-slate-100'>Deadline</h4>
+            <p>
+              <Calendar /> {todoItem.deadline}
+            </p>
+          </CardFooter>
+        </Card>
+      )}
+    </>
   )
 }

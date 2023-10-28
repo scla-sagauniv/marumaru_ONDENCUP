@@ -17,6 +17,12 @@ dependencies:
   '@dnd-kit/core':
     specifier: ^6.0.8
     version: 6.0.8(react-dom@18.2.0)(react@18.2.0)
+  '@dnd-kit/sortable':
+    specifier: ^7.0.2
+    version: 7.0.2(@dnd-kit/core@6.0.8)(react@18.2.0)
+  '@dnd-kit/utilities':
+    specifier: ^3.2.1
+    version: 3.2.1(react@18.2.0)
   '@hookform/resolvers':
     specifier: ^3.3.2
     version: 3.3.2(react-hook-form@7.47.0)
@@ -107,6 +113,9 @@ dependencies:
   next-session:
     specifier: ^4.0.5
     version: 4.0.5
+  playwright:
+    specifier: ^1.39.0
+    version: 1.39.0
   prettier:
     specifier: ^3.0.3
     version: 3.0.3
@@ -122,6 +131,9 @@ dependencies:
   react-hook-form:
     specifier: ^7.47.0
     version: 7.47.0(react@18.2.0)
+  superjson:
+    specifier: ^2.2.0
+    version: 2.2.0
   tailwind-merge:
     specifier: ^1.14.0
     version: 1.14.0
@@ -2549,6 +2561,18 @@ packages:
       '@dnd-kit/utilities': 3.2.1(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
+      tslib: 2.6.2
+    dev: false
+
+  /@dnd-kit/sortable@7.0.2(@dnd-kit/core@6.0.8)(react@18.2.0):
+    resolution: {integrity: sha512-wDkBHHf9iCi1veM834Gbk1429bd4lHX4RpAwT0y2cHLf246GAvU2sVw/oxWNpPKQNQRQaeGXhAVgrOl1IT+iyA==}
+    peerDependencies:
+      '@dnd-kit/core': ^6.0.7
+      react: '>=16.8.0'
+    dependencies:
+      '@dnd-kit/core': 6.0.8(react-dom@18.2.0)(react@18.2.0)
+      '@dnd-kit/utilities': 3.2.1(react@18.2.0)
+      react: 18.2.0
       tslib: 2.6.2
     dev: false
 
@@ -8441,6 +8465,13 @@ packages:
       is-what: 3.14.1
     dev: false
 
+  /copy-anything@3.0.5:
+    resolution: {integrity: sha512-yCEafptTtb4bk7GLEQoM8KVJpxAfdBJYaXyzQEgQQQgYrZiDp8SJmGKlYza6CYjEDNstAdNdKA3UuoULlEbS6w==}
+    engines: {node: '>=12.13'}
+    dependencies:
+      is-what: 4.1.16
+    dev: false
+
   /core-js-compat@3.33.1:
     resolution: {integrity: sha512-6pYKNOgD/j/bkC5xS5IIg6bncid3rfrI42oBH1SQJbsmYPKF7rhzcFzYCcxYMmNQQ0rCEB8WqpW7QHndOggaeQ==}
     dependencies:
@@ -10278,7 +10309,6 @@ packages:
     engines: {node: ^8.16.0 || ^10.6.0 || >=11.0.0}
     os: [darwin]
     requiresBuild: true
-    dev: true
     optional: true
 
   /fsevents@2.3.3:
@@ -11289,6 +11319,11 @@ packages:
 
   /is-what@3.14.1:
     resolution: {integrity: sha512-sNxgpk9793nzSs7bA6JQJGeIuRBQhAaNGG77kzYQgMkrID+lS6SlK07K5LaptscDlSaIgH+GPFzf+d75FVxozA==}
+    dev: false
+
+  /is-what@4.1.16:
+    resolution: {integrity: sha512-ZhMwEosbFJkA0YhFnNDgTM4ZxDRsS6HqTo7qsZM08fehyRYIYa0yHu5R6mgo1n/8MgaPBXiPimPD77baVFYg+A==}
+    engines: {node: '>=12.13'}
     dev: false
 
   /is-windows@0.2.0:
@@ -13558,7 +13593,6 @@ packages:
     resolution: {integrity: sha512-+k4pdZgs1qiM+OUkSjx96YiKsXsmb59evFoqv8SKO067qBA+Z2s/dCzJij/ZhdQcs2zlTAgRKfeiiLm8PQ2qvw==}
     engines: {node: '>=16'}
     hasBin: true
-    dev: true
 
   /playwright@1.39.0:
     resolution: {integrity: sha512-naE5QT11uC/Oiq0BwZ50gDmy8c8WLPRTEWuSSFVG2egBka/1qMoSqYQcROMT9zLwJ86oPofcTH2jBY/5wWOgIw==}
@@ -13568,7 +13602,6 @@ packages:
       playwright-core: 1.39.0
     optionalDependencies:
       fsevents: 2.3.2
-    dev: true
 
   /pnp-webpack-plugin@1.7.0(typescript@5.2.2):
     resolution: {integrity: sha512-2Rb3vm+EXble/sMXNSu6eoBx8e79gKqhNq9F5ZWW6ERNCTE/Q0wQNne5541tE5vKjfM8hpNCYL+LGc1YTfI0dg==}
@@ -15096,6 +15129,13 @@ packages:
       mz: 2.7.0
       pirates: 4.0.6
       ts-interface-checker: 0.1.13
+
+  /superjson@2.2.0:
+    resolution: {integrity: sha512-vSr6kwT/LY3T1+JaZllIGFp5+qEYyCw/s6EMgR8TulTwRbKETuVIqN4RTurPBTU/HlEpP0ytN3srB2vjjeBRoQ==}
+    engines: {node: '>=16'}
+    dependencies:
+      copy-anything: 3.0.5
+    dev: false
 
   /supports-color@5.5.0:
     resolution: {integrity: sha512-QjVjwdXIt408MIiAqCX4oUKsgU2EqAGzs2Ppkm4aQYbjm+ZEWEcW4SfFNTr4uMNZma0ey4f5lgLrkB0aX0QMow==}

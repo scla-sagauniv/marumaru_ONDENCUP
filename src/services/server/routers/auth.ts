@@ -27,4 +27,11 @@ export const authRouter = router({
       const userOnApp = userLogic.toUserOnApp(user)
       return { user: userOnApp }
     }),
+  fetchUser: procedure.query(({ ctx }) => {
+    return { user: ctx.session.user }
+  }),
+  signOut: procedure.mutation(({ ctx }) => {
+    ctx.session.user = undefined
+    return { user: undefined }
+  }),
 })
