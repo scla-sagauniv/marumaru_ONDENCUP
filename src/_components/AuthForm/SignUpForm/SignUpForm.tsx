@@ -11,7 +11,6 @@ import {
   FormMessage,
 } from '@/_components/ui/form'
 import { Input } from '@/_components/ui/input'
-
 import { SignUpReq, SignUpReqType } from '@/services/schema/auth/signUp'
 import { trpc } from '@/utils/trpc'
 
