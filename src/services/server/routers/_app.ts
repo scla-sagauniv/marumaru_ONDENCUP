@@ -4,6 +4,7 @@ import { procedure, router } from '@/services/server/trpc'
 
 import { authRouter } from './auth'
 import { todoRouter } from './todo'
+import { userRouter } from './userInfo'
 
 export const appRouter = router({
   healthcheck: procedure
@@ -19,6 +20,7 @@ export const appRouter = router({
     }),
   auth: authRouter,
   todo: todoRouter,
+  user: userRouter,
 })
 
 export type AppRouter = typeof appRouter
