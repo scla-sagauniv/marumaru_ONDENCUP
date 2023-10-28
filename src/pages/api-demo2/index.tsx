@@ -1,3 +1,4 @@
+import { Status } from '@prisma/client'
 import { Inter } from 'next/font/google'
 import { useState } from 'react'
 
@@ -6,7 +7,6 @@ import { TodoOnAppType } from '@/services/schema/todo'
 import { trpc } from '@/utils/trpc'
 
 const inter = Inter({ subsets: ['latin'] })
-
 
 export default function ApiDemoPage2() {
   const [createTodoInfo, setCreateTodoInfo] = useState<TodoOnAppType | null>(null)
@@ -36,6 +36,10 @@ export default function ApiDemoPage2() {
   const [deleteTodoParam, setDeleteTodoParam] = useState<DeleteTodoReqType>({
     id: -1,
   })
+
+ const convertToEnum = (value: string): Status => {
+    return value as Status;
+  }  
   
   const createTodoMutation = trpc.todo.createTodo.useMutation()
   const onCreateTodo = async () => {
@@ -136,6 +140,12 @@ export default function ApiDemoPage2() {
           value={updateTodoParam.endTime ? updateTodoParam.endTime.toString() : ''}
           onChange={(e) => setUpdateTodoParam({ ...updateTodoParam, endTime: new Date(e.target.value) })}
         />
+        <select onChange={(e) => setUpdateTodoParam({ ...updateTodoParam, status: convertToEnum(e.target.value)})}>
+          <option value='OPEN'>OPEN</option>
+          <option value='DOING'>DOING</option>
+          <option value='DONE'>DONE</option>
+          <option value='OVERDUE'>OVERDUE</option>
+        </select>
         <input
           type='text'
           value={updateTodoParam.lavel ?? ''}
