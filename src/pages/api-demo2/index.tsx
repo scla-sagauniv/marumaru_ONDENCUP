@@ -2,13 +2,11 @@ import { Status } from '@prisma/client'
 import { Inter } from 'next/font/google'
 import { useState } from 'react'
 
-import {
-  CreateTodoReqType,
-  GetTodoReqType,
-  UpdateTodoReqType,
-  DeleteTodoReqType,
-} from '@/services/schema/crud'
 import { TodoOnAppType } from '@/services/schema/todo'
+import { CreateTodoReqType } from '@/services/schema/todo/create'
+import { DeleteTodoReqType } from '@/services/schema/todo/delete'
+import { GetTodoReqType } from '@/services/schema/todo/read'
+import { UpdateTodoReqType } from '@/services/schema/todo/update'
 import { trpc } from '@/utils/trpc'
 
 const inter = Inter({ subsets: ['latin'] })
