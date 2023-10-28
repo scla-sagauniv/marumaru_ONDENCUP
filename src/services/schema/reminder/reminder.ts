@@ -1,11 +1,15 @@
 import * as z from 'zod'
 
-export const deadlineTodoInfo = z.object({
+export const DeadlineTodoInfo = z.object({
   title: z.string(),
-  email: z.string(),
+  endTime: z.date().nullable(),
+  user: z.object({
+    email: z.string(),
+  }),
 })
-export const sendEmailTodoAndUserRes = z.object({
-  todo: z.array(deadlineTodoInfo),
-})
+export type DeadlineTodoInfoType = z.infer<typeof DeadlineTodoInfo>
 
-export type sendEmailTodoAndUserResType = z.infer<typeof sendEmailTodoAndUserRes>
+export const SendEmailTodoAndUserRes = z.object({
+  todos: z.array(DeadlineTodoInfo),
+})
+export type SendEmailTodoAndUserResType = z.infer<typeof SendEmailTodoAndUserRes>

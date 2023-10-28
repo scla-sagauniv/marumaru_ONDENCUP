@@ -1,5 +1,6 @@
 import { PrismaClient, Todo, User } from '@prisma/client'
 
+import { DeadlineTodoInfoType } from '@/services/schema/reminder/reminder'
 import { TodoOnAppType } from '@/services/schema/todo'
 import { CreateTodoReqType } from '@/services/schema/todo/create'
 import { UpdateTodoReqType } from '@/services/schema/todo/update'
@@ -68,17 +69,20 @@ export const deleteTodo = async (id: TodoOnAppType['id'], prisma: PrismaClient) 
 }
 
 // 締め切りがギリなtodoのrecordを取得、titleとemailを取得
-export const getDeadlineTodo = async (prisma: PrismaClient) => {
+export const getDeadlineTodo = async (
+  prisma: PrismaClient,
+): Promise<DeadlineTodoInfoType[]> => {
   const today = new Date(Date.now())
-  const todo = await prisma.todo.findMany({
+  const todos = await prisma.todo.findMany({
     where: {
       endTime: {
         gte: today,
-        lt: new Date(today.getTime() + 24 * 60 * 60 * 1000),
+        lt: new Date(today.getTime() + 24 * 60 * 60 * 1000), // 24時間後
       },
     },
     select: {
       title: true,
+      endTime: true,
       user: {
         select: {
           email: true,
@@ -86,7 +90,7 @@ export const getDeadlineTodo = async (prisma: PrismaClient) => {
       },
     },
   })
-  return todo || undefined
+  return todos
 }
 
 export const toTodoOnApp = (todo: Todo): TodoOnAppType => {
