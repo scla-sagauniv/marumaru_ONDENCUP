@@ -2,6 +2,9 @@ import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3'
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner'
 import { NextApiRequest, NextApiResponse } from 'next'
 
+import { getSession } from '@/services/server/lib/session'
+import { prisma } from '@/services/server/prisma'
+
 type Result = {
   success: boolean
   error: unknown
@@ -24,8 +27,21 @@ export default async function handler(
   res: NextApiResponse<PresignedPostUrl | Result>,
 ) {
   try {
+    const session = await getSession(req, res)
+    const email = session?.user?.email
+
     const key = req.query.filename as string
     const clientUrl = await createPresignedUrlWithClient(key)
+
+    prisma.user.update({
+      where: {
+        email: email,
+      },
+      data: {
+        avatarUrl: key,
+      },
+    })
+
     res.status(200).json({
       url: clientUrl,
     })
