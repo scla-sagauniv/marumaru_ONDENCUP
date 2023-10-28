@@ -2,6 +2,8 @@ import { PrismaClient, User } from '@prisma/client'
 
 import { SignUpReqType } from '@/services/schema/auth/signUp'
 import { UserOnAppType } from '@/services/schema/user'
+import { UpdateUserInfoReqType } from '@/services/schema/userInfo/update'
+import { UpdateUserPassReqType } from '@/services/schema/userInfo/updatePass'
 
 export const createUser = async (params: SignUpReqType, prisma: PrismaClient) => {
   const { name, email, password } = params
@@ -10,6 +12,40 @@ export const createUser = async (params: SignUpReqType, prisma: PrismaClient) =>
       name,
       email,
       password,
+    },
+  })
+  return user
+}
+
+export const updateUser = async (
+  id: UserOnAppType['id'],
+  params: UpdateUserInfoReqType,
+  prisma: PrismaClient,
+) => {
+  const { name, avatarUrl } = params
+  const user = await prisma.user.update({
+    where: {
+      id: id,
+    },
+    data: {
+      name,
+      avatarUrl,
+    },
+  })
+  return user
+}
+
+export const updatePass = async (
+  id: UserOnAppType['id'],
+  newPassword: UpdateUserPassReqType['newPassword'],
+  prisma: PrismaClient,
+) => {
+  const user = await prisma.user.update({
+    where: {
+      id: id,
+    },
+    data: {
+      password: newPassword,
     },
   })
   return user
