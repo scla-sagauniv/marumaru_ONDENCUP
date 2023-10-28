@@ -1,9 +1,15 @@
 import { hash, genSalt, compare } from 'bcrypt'
+import { nanoid } from 'nanoid'
 
+import {
+  CreatePasswordResetUrlReq,
+  CreatePasswordResetUrlResType,
+} from '@/services/schema/auth/passwordReset'
 import { SignInReq } from '@/services/schema/auth/signIn'
 import { SignUpReq, SignUpResType } from '@/services/schema/auth/signUp'
 import { procedure, router } from '@/services/server/trpc'
 
+import sendEmail from '../lib/email/send'
 import * as userLogic from '../logic/user'
 
 export const authRouter = router({
@@ -41,4 +47,19 @@ export const authRouter = router({
     ctx.session.user = undefined
     return { user: undefined }
   }),
+  createPasswordResetUrl: procedure
+    .input(CreatePasswordResetUrlReq)
+    .mutation(async ({ ctx, input }): Promise<CreatePasswordResetUrlResType> => {
+      const user = await userLogic.findUserByEmail(input.email, ctx.prisma)
+      if (!user) {
+        throw new Error('User not found')
+      }
+      const token = nanoid()
+      ctx.redisClient.set(token, user.id)
+      ctx.redisClient.expire(token, 60 * 10) // 10 minutes
+      const resetUrl = `${process.env.BASE_URL}/api-demo/reset-password?token=${token}`
+      const body = `<div>Click <a href="${resetUrl}">here</a> to reset your password</div>`
+      sendEmail({ tos: [user.email], subject: 'Reset Password', body: body })
+      return { isSuccessful: true, message: 'OK' }
+    }),
 })

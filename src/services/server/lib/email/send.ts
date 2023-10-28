@@ -1,6 +1,14 @@
 import nodemailer from 'nodemailer'
 
-export default async function send(tos: string[], subject: string, body: string) {
+export default async function sendEmail({
+  tos,
+  subject,
+  body,
+}: {
+  tos: string[]
+  subject: string
+  body: string
+}) {
   const mail = process.env.MAIL_ADDRESS
   const pass = process.env.MAIL_PASSWORD
 
@@ -16,7 +24,7 @@ export default async function send(tos: string[], subject: string, body: string)
     from: mail,
     to: tos,
     subject: subject,
-    text: body,
+    html: body,
   })
 
   console.log('Message sent: %s', info.response)

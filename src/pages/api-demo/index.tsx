@@ -1,6 +1,7 @@
 import { Inter } from 'next/font/google'
 import { useState } from 'react'
 
+import { CreatePasswordResetUrlReqType } from '@/services/schema/auth/passwordReset'
 import { SignInReqType } from '@/services/schema/auth/signIn'
 import { SignUpReqType } from '@/services/schema/auth/signUp'
 import { UserOnAppType } from '@/services/schema/user'
@@ -67,6 +68,16 @@ export default function ApiDemoPage() {
     const res = await signOutMutation.mutateAsync()
     console.log(res)
     setUserInfo(undefined)
+  }
+
+  const [createPasswordResetUrlParam, setCreatePasswordResetUrlParam] =
+    useState<CreatePasswordResetUrlReqType>({ email: '' })
+  const createPasswordResetUrlMutation = trpc.auth.createPasswordResetUrl.useMutation()
+  const onCreatePasswordResetUrl = async () => {
+    const res = await createPasswordResetUrlMutation.mutateAsync({
+      email: createPasswordResetUrlParam.email,
+    })
+    console.log(res)
   }
 
   return (
@@ -136,6 +147,18 @@ export default function ApiDemoPage() {
       <div>
         <button style={{ color: 'white' }} onClick={onSignOut}>
           SignOut
+        </button>
+      </div>
+      <div>
+        <p style={{ color: 'white' }}>CreatePasswordResetUrl</p>
+        <input
+          type='text'
+          value={createPasswordResetUrlParam.email}
+          onChange={(e) => setCreatePasswordResetUrlParam({ email: e.target.value })}
+          placeholder='email'
+        />
+        <button style={{ color: 'white' }} onClick={onCreatePasswordResetUrl}>
+          Create Password Reset Url
         </button>
       </div>
     </main>
