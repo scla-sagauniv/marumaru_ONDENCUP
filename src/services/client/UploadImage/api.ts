@@ -6,24 +6,27 @@ import { UploadImageData } from './type'
 export async function uploadImage({ file }: { file: File }): Promise<UploadImageData> {
   const name = uuid()
   const ext = mime.extension(file.type)
-  const filename = encodeURIComponent(`${name}.${ext}`)
-  const fileType = encodeURIComponent(file.type)
-  const res = await fetch(`/api/rest/upload/image?file=${filename}&fileType=${fileType}`)
-  const { url, fields } = await res.json()
-  const formData = new FormData()
-  Object.entries({ ...fields, file }).forEach(([key, value]) => {
-    formData.append(key, value as string)
-  })
-  console.log(url)
+  const filename = encodeURIComponent(file.name)
+  const res = await fetch(`/api/rest/upload/image?filename=${filename}`)
+  const { url } = await res.json()
 
   return fetch(url, {
-    method: 'POST',
-    body: formData,
-  }).then(() => {
-    return {
-      url,
-      filename,
-      fields,
-    }
+    method: 'PUT',
+    headers: {
+      'Content-Length': file.size.toString(),
+    },
+    body: file,
   })
+    .then((res) => {
+      console.log(res)
+
+      return {
+        url,
+        filename,
+      }
+    })
+    .catch((error) => {
+      console.log(error)
+      return error
+    })
 }

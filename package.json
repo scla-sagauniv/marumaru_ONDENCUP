@@ -33,7 +33,9 @@
     ]
   },
   "dependencies": {
+    "@aws-sdk/credential-providers": "^3.438.0",
     "@aws-sdk/s3-presigned-post": "^3.438.0",
+    "@aws-sdk/s3-request-presigner": "^3.438.0",
     "@dnd-kit/core": "^6.0.8",
     "@hookform/resolvers": "^3.3.2",
     "@prisma/client": "5.5.2",

@@ -9,7 +9,7 @@ const nextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'marumaru-ondencup.s3.ap-northeast-1.amazonaws.com',
+        hostname: 'marumaru-onden-prod.s3.ap-northeast-1.amazonaws.com',
       },
     ],
   },
