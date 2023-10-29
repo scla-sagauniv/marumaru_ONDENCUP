@@ -7,8 +7,9 @@ export const TodoOnApp = z.object({
   content: z.string().nullable(),
   startTime: z.date().nullable(),
   endTime: z.date().nullable(),
-  lavel: z.string().nullable(),
+  label: z.string().nullable(),
   status: z.nativeEnum(Status),
+  order: z.number(),
   userId: z.number(),
 })
 

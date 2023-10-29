@@ -14,6 +14,9 @@ export function getBaseUrl() {
   if (process.env.RENDER_INTERNAL_HOSTNAME)
     // reference for render.com
     return `http://${process.env.RENDER_INTERNAL_HOSTNAME}:${process.env.PORT}`
+  if (process.env.BASE_URL) {
+    return `${process.env.BASE_URL}`
+  }
   // assume localhost
   return `http://localhost:${process.env.PORT ?? 8080}`
 }

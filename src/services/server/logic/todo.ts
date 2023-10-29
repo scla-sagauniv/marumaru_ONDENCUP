@@ -1,5 +1,6 @@
 import { PrismaClient, Todo, User } from '@prisma/client'
 
+import { DeadlineTodoInfoType } from '@/services/schema/reminder/reminder'
 import { TodoOnAppType } from '@/services/schema/todo'
 import { CreateTodoReqType } from '@/services/schema/todo/create'
 import { UpdateTodoReqType } from '@/services/schema/todo/update'
@@ -10,14 +11,14 @@ export const createTodo = async (
   userId: User['id'],
   prisma: PrismaClient,
 ) => {
-  const { title, content, startTime, endTime, lavel } = params
+  const { title, content, startTime, endTime, label } = params
   const todo = await prisma.todo.create({
     data: {
       title,
       content,
       startTime,
       endTime,
-      lavel,
+      label,
       userId,
     },
   })
@@ -40,7 +41,7 @@ export const updateTodo = async (
   params: UpdateTodoReqType,
   prisma: PrismaClient,
 ) => {
-  const { title, content, startTime, endTime, lavel, status } = params
+  const { title, content, startTime, endTime, label, status } = params
   const todo = await prisma.todo.update({
     where: {
       id: id,
@@ -50,7 +51,7 @@ export const updateTodo = async (
       content,
       startTime,
       endTime,
-      lavel,
+      label,
       status,
     },
   })
@@ -67,6 +68,41 @@ export const deleteTodo = async (id: TodoOnAppType['id'], prisma: PrismaClient) 
   return todo
 }
 
+// 締め切りがギリなtodoのrecordを取得、titleとemailを取得
+export const getDeadlineTodo = async (
+  prisma: PrismaClient,
+): Promise<DeadlineTodoInfoType[]> => {
+  // between today and tomorrow
+  const today = new Date()
+  const nextDay = new Date(today)
+  nextDay.setDate(today.getDate() + 1)
+  const nextNextDay = new Date(today)
+  nextNextDay.setDate(today.getDate() + 2)
+  // console.log('between', today, tomorrow)
+  console.log('today.getDate() + 1', today.getDate() + 1)
+  console.log('between', nextDay, nextNextDay)
+  const todos = await prisma.todo.findMany({
+    where: {
+      endTime: {
+        // gte: today,
+        gte: nextDay,
+        // lt: tomorrow,
+        lt: nextNextDay,
+      },
+    },
+    select: {
+      title: true,
+      endTime: true,
+      user: {
+        select: {
+          email: true,
+        },
+      },
+    },
+  })
+  return todos
+}
+
 export const toTodoOnApp = (todo: Todo): TodoOnAppType => {
   return {
     id: todo.id,
@@ -74,8 +110,9 @@ export const toTodoOnApp = (todo: Todo): TodoOnAppType => {
     content: todo.content,
     startTime: todo.startTime,
     endTime: todo.endTime,
-    lavel: todo.lavel,
+    label: todo.label,
     status: todo.status,
+    order: todo.order,
     userId: todo.userId,
   }
 }

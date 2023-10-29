@@ -22,16 +22,7 @@ export const todoRouter = router({
     .input(GetTodoReq)
     .query(async ({ ctx, input }): Promise<GetTodoResType> => {
       const todos = await todoLogic.getAllTodo(input.id, ctx.prisma)
-      const todoList = todos.map((todo) => ({
-        id: todo.id,
-        title: todo.title,
-        content: todo.content,
-        startTime: todo.startTime,
-        endTime: todo.endTime,
-        lavel: todo.lavel,
-        status: todo.status,
-        userId: todo.userId,
-      }))
+      const todoList = todos.map((todo) => todoLogic.toTodoOnApp(todo))
       return { todo: todoList }
     }),
   updateTodo: procedure
