@@ -1,23 +1,22 @@
 import { Meta, StoryObj } from '@storybook/react'
 
-import { NavBar } from './NavBar'
+import { AccountForm } from './AccountForm'
 
 const meta = {
-  title: 'NavBar',
-  component: NavBar,
+  title: 'AccountForm',
+  component: AccountForm,
   tags: ['autodocs'],
   parameters: {
     layout: 'fullscreen',
-    nextjs: {
-      router: {
-        basePath: '/',
-      },
-    },
   },
   argTypes: {},
-} satisfies Meta<typeof NavBar>
+} satisfies Meta<typeof AccountForm>
 
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const Default: Story = {}
+export const Default: Story = {
+  args: {
+    userId: '1',
+  },
+}

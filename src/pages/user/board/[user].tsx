@@ -5,8 +5,7 @@ import Layout from './layout'
 import type { NextPageWithLayout } from 'next'
 
 const BoardPage: NextPageWithLayout = () => {
-  // const router = useRouter()
-  return <TodoBoard />
+  return <TodoBoard/>
 }
 BoardPage.getLayout = (page) => <Layout>{page}</Layout>
 

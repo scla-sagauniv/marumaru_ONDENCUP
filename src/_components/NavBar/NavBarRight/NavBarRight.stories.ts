@@ -9,7 +9,9 @@ const meta = {
   parameters: {
     layout: 'fullscreen',
     nextjs: {
-      appDirectory: true,
+      router: {
+        basePath: '/',
+      },
     },
   },
   argTypes: {},

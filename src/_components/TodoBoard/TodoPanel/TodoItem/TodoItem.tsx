@@ -7,34 +7,34 @@ import {
   CardDescription,
   CardFooter,
 } from '@/_components/ui/card'
+import { TodoOnAppType } from '@/services/schema/todo'
 
-import { TodoFormType } from '../../TodoBoard'
+import { TodoModal } from '../TodoModal'
 
 type TodoItemProps = {
-  id?: number
-  todo?: TodoFormType
-  findTodoItem?: (id: number) => TodoFormType | undefined
+  todo: TodoOnAppType
 }
 
-export const TodoItem = ({ todo, id, findTodoItem }: TodoItemProps) => {
-  const todoItem = todo ? todo : findTodoItem!(id!)
+export const TodoItem = ({ todo }: TodoItemProps) => {
 
   return (
     <>
-      {todoItem && (
-        <Card className='w-full my-5 bg-zinc-800 border-zinc-600 text-slate-100'>
-          <CardHeader>
-            <CardTitle>{todoItem.id}</CardTitle>
-            <h4 className='text-sm text-slate-100'>Details</h4>
-            <CardDescription>{todoItem.content}</CardDescription>
-          </CardHeader>
-          <CardFooter className='flex justify-between'>
-            <h4 className='text-sm text-slate-100'>Deadline</h4>
-            <p>
-              <Calendar /> {todoItem.endTime?.toDateString()}
-            </p>
-          </CardFooter>
-        </Card>
+      {todo && (
+        <TodoModal todo={todo}>
+          <Card className='w-full my-5 bg-zinc-800 border-zinc-600 text-slate-100'>
+            <CardHeader>
+              <CardTitle>{todo.id}</CardTitle>
+              <h4 className='text-sm text-slate-100'>Details</h4>
+              <CardDescription>{todo.content}</CardDescription>
+            </CardHeader>
+            <CardFooter className='flex justify-between'>
+              <h4 className='text-sm text-slate-100'>Deadline</h4>
+              <p>
+                <Calendar /> {todo.endTime?.toDateString()}
+              </p>
+            </CardFooter>
+          </Card>
+        </TodoModal>
       )}
     </>
   )

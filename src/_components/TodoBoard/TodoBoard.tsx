@@ -1,71 +1,53 @@
-import { Status } from '@prisma/client'
-import { z } from 'zod'
+
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/_components/ui/tabs'
+import { TodoOnAppType } from '@/services/schema/todo'
 
 import { TodoPanel } from './TodoPanel/TodoModal/TodoPanel'
 
-const formSchema = z.object({
-  id: z.number(),
-  title: z.string(),
-  content: z.string().nullable(),
-  startTime: z.date().nullable(),
-  endTime: z.date().nullable(),
-  status: z.nativeEnum(Status),
-})
+// id: z.number(),
+// title: z.string(),
+// content: z.string().nullable(),
+// startTime: z.date().nullable(),
+// endTime: z.date().nullable(),
+// lavel: z.string().nullable(),
+// status: z.nativeEnum(Status),
+// userId: z.number(),
 
-export type TodoFormType = z.infer<typeof formSchema>
 
 export function TodoBoard() {
-  const todos: TodoFormType[] = [
+  const todos: TodoOnAppType[] = [
     {
       id: 1,
+      title: 'title1',
+      content: 'content1',
+      startTime: new Date(),
+      endTime: new Date(),
+      lavel: 'lavel1',
       status: 'OPEN',
-      title: 'title',
-      content: 'content',
-      startTime: new Date('2021-01-01'),
-      endTime: new Date('2021-01-01'),
+      userId: 1,
     },
     {
       id: 2,
-      status: 'OPEN',
-      title: 'title',
-      content: 'content',
-      startTime: new Date('2021-01-01'),
-      endTime: new Date('2021-01-01'),
+      title: 'title2',
+      content: 'content2',
+      startTime: new Date(),
+      endTime: new Date(),
+      lavel: 'lavel2',
+      status: 'DOING',
+      userId: 2,
     },
     {
       id: 3,
-      status: 'OPEN',
-      title: 'title',
-      content: 'content',
-      startTime: new Date('2021-01-01'),
-      endTime: new Date('2021-01-01'),
+      title: 'title3',
+      content: 'content3',
+      startTime: new Date(),
+      endTime: new Date(),
+      lavel: 'lavel3',
+      status: 'DONE',
+      userId: 3,
     },
-    {
-      id: 4,
-      status: 'OPEN',
-      title: 'title',
-      content: 'content',
-      startTime: new Date('2021-01-01'),
-      endTime: new Date('2021-01-01'),
-    },
-    {
-      id: 5,
-      status: 'OPEN',
-      title: 'title',
-      content: 'content',
-      startTime: new Date('2021-01-01'),
-      endTime: new Date('2021-01-01'),
-    },
-    {
-      id: 6,
-      status: 'OPEN',
-      title: 'title',
-      content: 'content',
-      startTime: new Date('2021-01-01'),
-      endTime: new Date('2021-01-01'),
-    },
+
   ]
   return (
     <Tabs defaultValue='panel' className='w-full h-full'>

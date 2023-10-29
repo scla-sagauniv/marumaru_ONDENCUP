@@ -13,18 +13,19 @@ import {
 import { arrayMove, sortableKeyboardCoordinates } from '@dnd-kit/sortable'
 import { useState } from 'react'
 
-import { TodoFormType } from '../../TodoBoard'
+import { TodoOnAppType } from '@/services/schema/todo'
+
 import { SortableContainer } from '../SortableContainer'
 import { TodoItem } from '../TodoItem'
 
 interface TodoContainers {
-  new: TodoFormType[]
-  doing: TodoFormType[]
-  done: TodoFormType[]
+  new: TodoOnAppType[]
+  doing: TodoOnAppType[]
+  done: TodoOnAppType[]
 }
 
 type TodoBoardProps = {
-  todos: TodoFormType[]
+  todos: TodoOnAppType[]
 }
 
 export function TodoPanel({ todos }: TodoBoardProps) {
@@ -135,8 +136,8 @@ export function TodoPanel({ todos }: TodoBoardProps) {
       console.log('👍overItems' + overItems)
 
       // 配列のインデックス取得
-      const activeIndex = activeItems.findIndex((item: TodoFormType) => item.id === id)
-      const overIndex = overItems.findIndex((item: TodoFormType) => item.id === overId)
+      const activeIndex = activeItems.findIndex((item: TodoOnAppType) => item.id === id)
+      const overIndex = overItems.findIndex((item: TodoOnAppType) => item.id === overId)
 
       let newIndex
       if (overId in prev[overContainer]) {
@@ -155,7 +156,7 @@ export function TodoPanel({ todos }: TodoBoardProps) {
       return {
         ...prev,
         [activeContainer]: [
-          ...prev[activeContainer].filter((item: TodoFormType) => item.id !== active.id),
+          ...prev[activeContainer].filter((item: TodoOnAppType) => item.id !== active.id),
         ],
         [overContainer]: [
           ...prev[overContainer].slice(0, newIndex),
@@ -184,10 +185,10 @@ export function TodoPanel({ todos }: TodoBoardProps) {
     // 配列のインデックス取得
     // ！マークは、nullやundefinedを除外するための非nullアサーション演算子
     const activeIndex = items[activeContainer!].findIndex(
-      (item: TodoFormType) => item.id === id,
+      (item: TodoOnAppType) => item.id === id,
     )
     const overIndex = items[overContainer!].findIndex(
-      (item: TodoFormType) => item.id === overId,
+      (item: TodoOnAppType) => item.id === overId,
     )
 
     console.log('👍activeIndex' + activeIndex)
@@ -217,7 +218,7 @@ export function TodoPanel({ todos }: TodoBoardProps) {
         <SortableContainer id='done' label='💯Done' items={items.done} />
         {/* DragOverlay */}
         <DragOverlay>
-          {activeId ? <TodoItem id={activeId} findTodoItem={findTodoItem} /> : null}
+          {activeId ? <TodoItem todo={findTodoItem(activeId)!} /> : null}
         </DragOverlay>
       </DndContext>
     </div>

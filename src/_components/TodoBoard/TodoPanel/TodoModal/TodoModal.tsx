@@ -1,7 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Label } from '@radix-ui/react-label'
 import { addDays } from 'date-fns'
-import { ReactNode, useState } from 'react'
+import { ReactNode, useEffect, useState } from 'react'
 import { DateRange } from 'react-day-picker'
 import { Form, useForm } from 'react-hook-form'
 import { z } from 'zod'
@@ -18,15 +18,29 @@ import {
 import { FormField } from '@/_components/ui/form'
 import { Input } from '@/_components/ui/input'
 import { Separator } from '@/_components/ui/separator'
+import { TodoOnAppType } from '@/services/schema/todo'
 
 import { CalendarForm } from '../CalendarForm'
 
-export function TodoModal({ children }: { children: ReactNode }) {
+type TodoModalProps = {
+  children: ReactNode,
+  todo: TodoOnAppType
+}
+
+export function TodoModal({ children, todo }: TodoModalProps) {
   const onSubmit = (data: any) => console.log(data)
   const [date, setDate] = useState<DateRange | undefined>({
     from: new Date(2022, 0, 20),
     to: addDays(new Date(2022, 0, 20), 20),
   })
+
+  useEffect(() => {
+    setDate({
+      from: todo.startTime ?? undefined,
+      to: todo.endTime ?? undefined,
+    })
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const formSchema = z.object({
     name: z.string(),

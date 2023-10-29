@@ -1,12 +1,13 @@
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 
-import { TodoFormType } from '../../TodoBoard'
+import { TodoOnAppType } from '@/services/schema/todo'
+
 import { TodoItem } from '../TodoItem'
 import { TodoModal } from '../TodoModal'
 
 type SortableTodoItemProps = {
-  todo: TodoFormType
+  todo: TodoOnAppType
 }
 
 export const SortableTodoItem = ({ todo }: SortableTodoItemProps) => {
@@ -16,7 +17,7 @@ export const SortableTodoItem = ({ todo }: SortableTodoItemProps) => {
 
   return (
     <>
-      <TodoModal>
+      <TodoModal todo={todo}>
         <div
           className=''
           ref={setNodeRef}
