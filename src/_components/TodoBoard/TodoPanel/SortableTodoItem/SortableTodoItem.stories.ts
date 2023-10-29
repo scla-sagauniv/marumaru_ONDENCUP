@@ -25,14 +25,14 @@ type Story = StoryObj<typeof meta>
 export const Default: Story = {
   args: {
     todo: {
-      id: '1',
-      order: 1,
+      id: 1,
       title: 'title',
-      description: 'description',
-      status: 'new',
-      deadline: '2021-08-01T00:00:00.000Z',
-      createdAt: '2021-08-01T00:00:00.000Z',
-      updatedAt: '2021-08-01T00:00:00.000Z',
+      content: 'content',
+      startTime: new Date(),
+      endTime: new Date(),
+      lavel: 'lavel',
+      status: 'DOING',
+      userId: 1,
     },
   },
 }

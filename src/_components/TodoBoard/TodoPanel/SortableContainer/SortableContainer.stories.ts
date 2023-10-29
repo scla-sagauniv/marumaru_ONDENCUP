@@ -16,16 +16,15 @@ const meta = {
 
 export default meta
 type Story = StoryObj<typeof meta>
-// export type GetTodoType = {
-//   id: string
-//   order: number
-//   status: Status
-//   title: string
-//   description: string
-//   deadline: string
-//   createdAt: string
-//   updatedAt: string
-// }
+
+// id: z.number(),
+// title: z.string(),
+// content: z.string().nullable(),
+// startTime: z.date().nullable(),
+// endTime: z.date().nullable(),
+// lavel: z.string().nullable(),
+// status: z.nativeEnum(Status),
+// userId: z.number(),
 
 export const Default: Story = {
   args: {
@@ -33,34 +32,34 @@ export const Default: Story = {
     label: 'new',
     items: [
       {
-        id: '1',
-        order: 1,
+        id: 1,
         title: 'title',
-        description: 'description',
-        status: 'new',
-        deadline: '2021-08-01T00:00:00.000Z',
-        createdAt: '2021-08-01T00:00:00.000Z',
-        updatedAt: '2021-08-01T00:00:00.000Z',
+        content: 'content',
+        startTime: new Date(),
+        endTime: new Date(),
+        lavel: 'lavel',
+        status: 'DOING',
+        userId: 1,
       },
       {
-        id: '2',
-        order: 1,
+        id: 2,
         title: 'title',
-        description: 'description',
-        status: 'new',
-        deadline: '2021-08-01T00:00:00.000Z',
-        createdAt: '2021-08-01T00:00:00.000Z',
-        updatedAt: '2021-08-01T00:00:00.000Z',
+        content: 'content',
+        startTime: new Date(),
+        endTime: new Date(),
+        lavel: 'lavel',
+        status: 'DOING',
+        userId: 1,
       },
       {
-        id: '3',
-        order: 1,
+        id: 3,
         title: 'title',
-        description: 'description',
-        status: 'new',
-        deadline: '2021-08-01T00:00:00.000Z',
-        createdAt: '2021-08-01T00:00:00.000Z',
-        updatedAt: '2021-08-01T00:00:00.000Z',
+        content: 'content',
+        startTime: new Date(),
+        endTime: new Date(),
+        lavel: 'lavel',
+        status: 'DOING',
+        userId: 1,
       },
     ],
   },
