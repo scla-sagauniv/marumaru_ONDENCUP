@@ -2,6 +2,7 @@ import React from 'react'
 import type { Preview } from '@storybook/react'
 import '../src/styles/globals.css'
 import { TrpcProvider } from '../src/utils/storybook/provider'
+import ReduxProvider from '../src/lib/state/provider/index'
 
 const preview: Preview = {
   parameters: {
@@ -17,7 +18,9 @@ const preview: Preview = {
   decorators: [
     (Story) => (
       <TrpcProvider>
-        <Story />
+        <ReduxProvider>
+          <Story />
+        </ReduxProvider>
       </TrpcProvider>
     ),
   ],
