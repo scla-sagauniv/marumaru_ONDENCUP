@@ -1,4 +1,5 @@
-import { Status } from '@prisma/client'
+// TODO
+import { Status } from '@/../node_modules/.prisma/client'
 import { Inter } from 'next/font/google'
 import { useState } from 'react'
 
