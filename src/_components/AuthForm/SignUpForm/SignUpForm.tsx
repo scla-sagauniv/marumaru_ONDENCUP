@@ -28,7 +28,7 @@ export default function SignUpForm() {
   })
 
   async function onSubmit(values: SignUpReqType) {
-    const res = await authMutation.mutateAsync(values)
+    await authMutation.mutateAsync(values)
   }
 
   return (
