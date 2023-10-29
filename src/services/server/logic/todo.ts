@@ -72,12 +72,22 @@ export const deleteTodo = async (id: TodoOnAppType['id'], prisma: PrismaClient) 
 export const getDeadlineTodo = async (
   prisma: PrismaClient,
 ): Promise<DeadlineTodoInfoType[]> => {
-  const today = new Date(Date.now())
+  // between today and tomorrow
+  const today = new Date()
+  const nextDay = new Date(today)
+  nextDay.setDate(today.getDate() + 1)
+  const nextNextDay = new Date(today)
+  nextNextDay.setDate(today.getDate() + 2)
+  // console.log('between', today, tomorrow)
+  console.log('today.getDate() + 1', today.getDate() + 1)
+  console.log('between', nextDay, nextNextDay)
   const todos = await prisma.todo.findMany({
     where: {
       endTime: {
-        gte: today,
-        lt: new Date(today.getTime() + 24 * 60 * 60 * 1000), // 24時間後
+        // gte: today,
+        gte: nextDay,
+        // lt: tomorrow,
+        lt: nextNextDay,
       },
     },
     select: {
