@@ -11,12 +11,16 @@ import {
   useSensors,
 } from '@dnd-kit/core'
 import { arrayMove, sortableKeyboardCoordinates } from '@dnd-kit/sortable'
+import { PlusIcon } from 'lucide-react'
 import { useState } from 'react'
 
+import { Button } from '@/_components/ui/button'
 import { TodoOnAppType } from '@/services/schema/todo'
 
 import { SortableContainer } from '../SortableContainer'
 import { TodoItem } from '../TodoItem'
+
+import { TodoModal } from '.'
 
 interface TodoContainers {
   new: TodoOnAppType[]
@@ -213,7 +217,13 @@ export function TodoPanel({ todos }: TodoBoardProps) {
         onDragOver={handleDragOver}
         onDragEnd={handleDragEnd}
       >
-        <SortableContainer id='new' label='🐣New' items={items.new} />
+        <SortableContainer id='new' label='🐣New' items={items.new}>
+          <TodoModal>
+            <Button size='icon' className='rounded-full'>
+              <PlusIcon />
+            </Button>
+          </TodoModal>
+        </SortableContainer>
         <SortableContainer id='doing' label='🏗️Doing' items={items.doing} />
         <SortableContainer id='done' label='💯Done' items={items.done} />
         {/* DragOverlay */}

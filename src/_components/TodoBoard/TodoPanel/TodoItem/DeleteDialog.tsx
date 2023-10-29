@@ -13,7 +13,7 @@ import {
 } from '@/_components/ui/alert-dialog'
 import { trpc } from '@/utils/trpc'
 
-export function DeleteDialog({ children, id }: { children: ReactNode; id: string }) {
+export function DeleteDialog({ children, id }: { children: ReactNode; id: number }) {
   const deleteTodoMutation = trpc.todo.deleteTodo.useMutation()
   const onDeleteTodo = async () => {
     const res = await deleteTodoMutation.mutateAsync({ id: Number(id) })
