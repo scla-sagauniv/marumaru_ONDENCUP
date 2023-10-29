@@ -51,7 +51,7 @@ export function useUploadImage<T extends FieldValues>({
   const onChangeImage = handleChangeFile((_, file) => {
     uploadImage({ file })
       .then((data) => {
-        const imgPath = `${data.url}/${data.filename}` as PathValue<T, Path<T>>
+        const imgPath = `${data.filename}` as PathValue<T, Path<T>>
         setImageUrl(imgPath)
         setValue(name, imgPath)
         onResolved?.(data)

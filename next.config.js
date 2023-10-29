@@ -9,7 +9,11 @@ const nextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'marumaru-onden-prod.s3.ap-northeast-1.amazonaws.com',
+        hostname: 'd1qml5tdie7qey.cloudfront.net',
+      },
+      {
+        protocol: 'https',
+        hostname: 'http.cat',
       },
     ],
   },

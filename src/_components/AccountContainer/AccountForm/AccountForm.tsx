@@ -16,22 +16,34 @@ import {
 } from '@/_components/ui/form'
 import { Input } from '@/_components/ui/input'
 import { toast } from '@/_components/ui/use-toast'
-import { UserOnApp, UserOnAppType } from '@/services/schema/user'
+import {
+  UpdateUserInfoReq,
+  UpdateUserInfoReqType,
+} from '@/services/schema/userInfo/update'
 import { trpc } from '@/utils/trpc'
 
 import { useUploadImage } from '../hooks/useUpload'
 
-export function AccountForm({ userId }: { userId: string | string[] | undefined }) {
-  const router = useRouter()
-  // account form に必要なユーザデータを取得する
-  const user = trpc.auth.fetchUser.useQuery()
+export function AccountForm({
+  userId,
+  name,
+  avatarUrl,
+}: {
+  userId: string | string[] | undefined
+  name: string
+  avatarUrl: string
+}) {
+  console.log('************')
+  console.log(avatarUrl)
+  console.log('************')
 
-  const form = useForm<Omit<UserOnAppType, 'id'>>({
-    resolver: zodResolver(UserOnApp.omit({ id: true })),
+  const router = useRouter()
+  const updateUserMutation = trpc.user.updateUserInfo.useMutation()
+
+  const form = useForm<UpdateUserInfoReqType>({
+    resolver: zodResolver(UpdateUserInfoReq),
     defaultValues: {
-      email: !user.data ? 'loading...' : user.data.user?.email,
-      name: !user.data ? 'loading...' : user.data.user?.name,
-      avatarUrl: !user.data ? 'loading...' : user.data.user?.avatarUrl,
+      name: name,
     },
   })
 
@@ -39,7 +51,7 @@ export function AccountForm({ userId }: { userId: string | string[] | undefined 
     register: form.register,
     setValue: form.setValue,
     name: 'avatarUrl',
-    defaultImageUrl: 'https://avatars.githubusercontent.com/u/7525670?v=4',
+    defaultImageUrl: avatarUrl,
     onRejected: (error) => {
       toast({
         title: 'Error',
@@ -60,7 +72,8 @@ export function AccountForm({ userId }: { userId: string | string[] | undefined 
     },
   })
 
-  function onSubmit(data: Omit<UserOnAppType, 'id'>) {
+  async function onSubmit(data: UpdateUserInfoReqType) {
+    await updateUserMutation.mutateAsync(data)
     toast({
       title: 'You submitted the following values:',
       description: (
@@ -106,22 +119,6 @@ export function AccountForm({ userId }: { userId: string | string[] | undefined 
         />
         <FormField
           control={form.control}
-          name='email'
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel className='text-slate-100'>Email</FormLabel>
-              <FormControl>
-                <Input {...field} />
-              </FormControl>
-              <FormDescription className='text-zinc-400'>
-                メールアドレスを変更できます
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
           name='avatarUrl'
           render={() => (
             <FormItem>
@@ -140,13 +137,18 @@ export function AccountForm({ userId }: { userId: string | string[] | undefined 
             </FormItem>
           )}
         />
+
         {imageUrl && (
           <Image
-            src={imageUrl}
+            src={
+              avatarUrl == 'https://http.cat/101'
+                ? avatarUrl
+                : `https://d1qml5tdie7qey.cloudfront.net/${imageUrl}`
+            }
             alt=''
             width={100}
             height={100}
-            className='rounded-full'
+            className='w-[100px] h-[100px] rounded-full'
           />
         )}
         <Button type='submit' variant='secondary' className='mr-4'>
