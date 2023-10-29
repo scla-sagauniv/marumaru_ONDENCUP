@@ -3,7 +3,9 @@ import { z } from 'zod'
 import { procedure, router } from '@/services/server/trpc'
 
 import { authRouter } from './auth'
+import { remindRouter } from './reminder'
 import { todoRouter } from './todo'
+import { userRouter } from './userInfo'
 
 export const appRouter = router({
   healthcheck: procedure
@@ -19,6 +21,8 @@ export const appRouter = router({
     }),
   auth: authRouter,
   todo: todoRouter,
+  user: userRouter,
+  remind: remindRouter,
 })
 
 export type AppRouter = typeof appRouter
