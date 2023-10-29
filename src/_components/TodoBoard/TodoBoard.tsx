@@ -1,5 +1,3 @@
-
-
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/_components/ui/tabs'
 import { TodoOnAppType } from '@/services/schema/todo'
 
@@ -10,10 +8,9 @@ import { TodoPanel } from './TodoPanel/TodoModal/TodoPanel'
 // content: z.string().nullable(),
 // startTime: z.date().nullable(),
 // endTime: z.date().nullable(),
-// lavel: z.string().nullable(),
+// label: z.string().nullable(),
 // status: z.nativeEnum(Status),
 // userId: z.number(),
-
 
 export function TodoBoard() {
   const todos: TodoOnAppType[] = [
@@ -23,8 +20,9 @@ export function TodoBoard() {
       content: 'content1',
       startTime: new Date(),
       endTime: new Date(),
-      lavel: 'lavel1',
+      label: 'label1',
       status: 'OPEN',
+      order: 1,
       userId: 1,
     },
     {
@@ -33,9 +31,10 @@ export function TodoBoard() {
       content: 'content2',
       startTime: new Date(),
       endTime: new Date(),
-      lavel: 'lavel2',
+      label: 'label2',
       status: 'DOING',
-      userId: 2,
+      order: 2,
+      userId: 1,
     },
     {
       id: 3,
@@ -43,11 +42,22 @@ export function TodoBoard() {
       content: 'content3',
       startTime: new Date(),
       endTime: new Date(),
-      lavel: 'lavel3',
+      label: 'label3',
       status: 'DONE',
-      userId: 3,
+      order: 3,
+      userId: 1,
     },
-
+    {
+      id: 4,
+      title: 'title4',
+      content: 'content4',
+      startTime: new Date(),
+      endTime: new Date(),
+      label: 'label4',
+      status: 'OVERDUE',
+      order: 4,
+      userId: 1,
+    },
   ]
   return (
     <Tabs defaultValue='panel' className='w-full h-full'>

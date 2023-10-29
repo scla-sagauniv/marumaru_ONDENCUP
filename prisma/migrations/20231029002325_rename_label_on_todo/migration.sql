@@ -5,5 +5,5 @@
 
 */
 -- AlterTable
-ALTER TABLE `Todo` DROP COLUMN `lavel`,
+ALTER TABLE `Todo` DROP COLUMN `label`,
     ADD COLUMN `label` VARCHAR(191) NULL;

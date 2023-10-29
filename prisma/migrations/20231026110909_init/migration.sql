@@ -19,7 +19,7 @@ CREATE TABLE `Todo` (
     `content` VARCHAR(191) NULL,
     `startTime` DATETIME(3) NULL,
     `endTime` DATETIME(3) NULL,
-    `lavel` VARCHAR(191) NULL,
+    `label` VARCHAR(191) NULL,
     `status` ENUM('OPEN', 'DOING', 'DONE', 'OVERDUE') NOT NULL DEFAULT 'OPEN',
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NOT NULL,
