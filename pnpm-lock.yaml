@@ -5,6 +5,9 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  '@aws-sdk/client-s3':
+    specifier: ^3.438.0
+    version: 3.438.0
   '@aws-sdk/credential-providers':
     specifier: ^3.438.0
     version: 3.438.0
