@@ -3,13 +3,10 @@ import { NextRequest, NextResponse } from 'next/server'
 import { UserOnAppType } from './services/schema/user'
 
 export const config = {
-  matcher: ['/todo/:path*', '/user/:path*'],
+  matcher: ['/api-demo2/:path*', '/api-demo/:path*', '/todo/:path*', '/user/:path*'],
 }
 
 export async function middleware(request: NextRequest) {
-  // hooks使えない
-  // createTRPCProxyClientで作ったらcookieが送れない(cookieはあくまでブラウザで持っているから？)
-  // だから、Nextの機能使ってcookie取得してfetchで無理やりcookie送るしかないのかな。。。
   const cookie = request.cookies.get('sid')
   const res = await fetch(
     `${process.env.BASE_URL}/api/trpc/auth.fetchUser?batch=1&input={}`,
