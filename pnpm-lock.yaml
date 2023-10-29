@@ -29,7 +29,7 @@ dependencies:
   '@hookform/resolvers':
     specifier: ^3.3.2
     version: 3.3.2(react-hook-form@7.47.0)
-  '@prisma/client':
+  '@/../node_modules/.prisma/client':
     specifier: 5.5.2
     version: 5.5.2(prisma@5.5.2)
   '@radix-ui/react-alert-dialog':
@@ -3655,7 +3655,7 @@ packages:
       webpack: 5.89.0(@swc/core@1.3.94)(esbuild@0.18.20)
     dev: true
 
-  /@prisma/client@5.5.2(prisma@5.5.2):
+  /@/../node_modules/.prisma/client@5.5.2(prisma@5.5.2):
     resolution: {integrity: sha512-54XkqR8M+fxbzYqe+bIXimYnkkcGqgOh0dn0yWtIk6CQT4IUCAvNFNcQZwk2KqaLU+/1PHTSWrcHtx4XjluR5w==}
     engines: {node: '>=16.13'}
     requiresBuild: true
