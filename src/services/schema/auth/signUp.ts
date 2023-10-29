@@ -10,6 +10,17 @@ export const SignUpReq = z.object({
 export type SignUpReqType = z.infer<typeof SignUpReq>
 
 export const SignUpRes = z.object({
-  user: UserOnApp,
+  isSuccessful: z.boolean(),
+  message: z.string(),
 })
 export type SignUpResType = z.infer<typeof SignUpRes>
+
+export const ConfirmEmailReq = z.object({
+  token: z.string(),
+})
+export type ConfirmEmailReqType = z.infer<typeof ConfirmEmailReq>
+
+export const ConfirmEmailRes = z.object({
+  user: UserOnApp,
+})
+export type ConfirmEmailResType = z.infer<typeof ConfirmEmailRes>

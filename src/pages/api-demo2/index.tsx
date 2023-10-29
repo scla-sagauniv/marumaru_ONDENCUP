@@ -43,6 +43,7 @@ export default function ApiDemoPage2() {
     return value as Status
   }
 
+  // @ts-ignore
   const createTodoMutation = trpc.todo.createTodo.useMutation()
   const onCreateTodo = async () => {
     const res = await createTodoMutation.mutateAsync(createTodoParam)
