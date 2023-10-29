@@ -21,7 +21,7 @@ export default function ApiDemoPage2() {
     content: '',
     startTime: null,
     endTime: null,
-    lavel: '',
+    label: '',
   })
   const getTodoParam: GetTodoReqType = {
     id: 1,
@@ -32,7 +32,7 @@ export default function ApiDemoPage2() {
     content: '',
     startTime: null,
     endTime: null,
-    lavel: '',
+    label: '',
     status: 'OPEN',
   })
   const [deleteTodoParam, setDeleteTodoParam] = useState<DeleteTodoReqType>({
@@ -107,11 +107,11 @@ export default function ApiDemoPage2() {
         />
         <input
           type='text'
-          value={createTodoParam.lavel ?? ''}
+          value={createTodoParam.label ?? ''}
           onChange={(e) =>
-            setCreateTodoParam({ ...createTodoParam, lavel: e.target.value })
+            setCreateTodoParam({ ...createTodoParam, label: e.target.value })
           }
-          placeholder='lavel'
+          placeholder='label'
         />
         <button
           style={{ color: 'white', marginLeft: '10px' }}
@@ -179,11 +179,11 @@ export default function ApiDemoPage2() {
         </select>
         <input
           type='text'
-          value={updateTodoParam.lavel ?? ''}
+          value={updateTodoParam.label ?? ''}
           onChange={(e) =>
-            setUpdateTodoParam({ ...updateTodoParam, lavel: e.target.value })
+            setUpdateTodoParam({ ...updateTodoParam, label: e.target.value })
           }
-          placeholder='lavel'
+          placeholder='label'
         />
         {/* <input
           type='number'

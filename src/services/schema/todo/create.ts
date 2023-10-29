@@ -7,7 +7,7 @@ export const CreateTodoReq = z.object({
   content: z.string().nullable(),
   startTime: z.date().nullable(),
   endTime: z.date().nullable(),
-  lavel: z.string().nullable(),
+  label: z.string().nullable(),
 })
 
 export type CreateTodoReqType = z.infer<typeof CreateTodoReq>

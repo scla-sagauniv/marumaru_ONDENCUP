@@ -11,14 +11,14 @@ export const createTodo = async (
   userId: User['id'],
   prisma: PrismaClient,
 ) => {
-  const { title, content, startTime, endTime, lavel } = params
+  const { title, content, startTime, endTime, label } = params
   const todo = await prisma.todo.create({
     data: {
       title,
       content,
       startTime,
       endTime,
-      lavel,
+      label,
       userId,
     },
   })
@@ -41,7 +41,7 @@ export const updateTodo = async (
   params: UpdateTodoReqType,
   prisma: PrismaClient,
 ) => {
-  const { title, content, startTime, endTime, lavel, status } = params
+  const { title, content, startTime, endTime, label, status } = params
   const todo = await prisma.todo.update({
     where: {
       id: id,
@@ -51,7 +51,7 @@ export const updateTodo = async (
       content,
       startTime,
       endTime,
-      lavel,
+      label,
       status,
     },
   })
@@ -110,7 +110,7 @@ export const toTodoOnApp = (todo: Todo): TodoOnAppType => {
     content: todo.content,
     startTime: todo.startTime,
     endTime: todo.endTime,
-    lavel: todo.lavel,
+    label: todo.label,
     status: todo.status,
     userId: todo.userId,
   }

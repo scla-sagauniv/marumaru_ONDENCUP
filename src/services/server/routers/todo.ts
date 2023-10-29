@@ -28,7 +28,7 @@ export const todoRouter = router({
         content: todo.content,
         startTime: todo.startTime,
         endTime: todo.endTime,
-        lavel: todo.lavel,
+        label: todo.label,
         status: todo.status,
         userId: todo.userId,
       }))

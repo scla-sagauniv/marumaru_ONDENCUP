@@ -9,7 +9,7 @@ export const UpdateTodoReq = z.object({
   content: z.string().nullable(),
   startTime: z.date().nullable(),
   endTime: z.date().nullable(),
-  lavel: z.string().nullable(),
+  label: z.string().nullable(),
   status: z.nativeEnum(Status),
 })
 
