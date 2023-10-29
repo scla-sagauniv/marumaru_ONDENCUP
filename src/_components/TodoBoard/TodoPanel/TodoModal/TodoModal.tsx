@@ -2,7 +2,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { Label } from '@radix-ui/react-label'
 import { ReactNode, useEffect, useState } from 'react'
 import { DateRange } from 'react-day-picker'
-import { Form, useForm } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
 import { Button } from '@/_components/ui/button'
@@ -14,10 +14,12 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/_components/ui/dialog'
-import { FormField } from '@/_components/ui/form'
+import { Form, FormControl, FormField, FormItem, FormLabel } from '@/_components/ui/form'
 import { Input } from '@/_components/ui/input'
 import { Separator } from '@/_components/ui/separator'
 import { TodoOnAppType } from '@/services/schema/todo'
+import { CreateTodoReq } from '@/services/schema/todo/create'
+import { trpc } from '@/utils/trpc'
 
 import { CalendarForm } from '../CalendarForm'
 
@@ -27,7 +29,6 @@ type TodoModalProps = {
 }
 
 export function TodoModal({ children, todo }: TodoModalProps) {
-  const onSubmit = (data: any) => console.log(data)
   const [date, setDate] = useState<DateRange | undefined>(undefined)
 
   useEffect(() => {
@@ -40,60 +41,111 @@ export function TodoModal({ children, todo }: TodoModalProps) {
   }, [])
 
   const formSchema = z.object({
-    name: z.string(),
-    username: z.string(),
-    email: z.string().email(),
+    title: CreateTodoReq.shape.title,
+    content: CreateTodoReq.shape.content,
+    label: CreateTodoReq.shape.label,
   })
+  type formSchemaType = z.infer<typeof formSchema>
 
-  const form = useForm({
+  const form = useForm<formSchemaType>({
     resolver: zodResolver(formSchema),
   })
+
+  const todoMutation = trpc.todo.createTodo.useMutation()
+  async function onSubmit(values: formSchemaType) {
+    console.log(values)
+
+    const res = await todoMutation.mutateAsync({
+      ...values,
+      startTime: date?.from ?? null,
+      endTime: date?.to ?? null,
+    })
+    console.log(res)
+  }
+
   return (
     <Dialog>
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent className='sm:max-w-[800px] px-7'>
+        <DialogHeader>
+          <DialogTitle>Edit profile</DialogTitle>
+        </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
-            <DialogHeader>
-              <DialogTitle>Edit profile</DialogTitle>
-            </DialogHeader>
-            <FormField
-              control={form.control}
-              name='name'
-              render={({ field }) => (
-                <div className='flex py-4 h-[200px] w-full'>
-                  <div className='flex flex-col justify-start items-center gap-4 w-1/2'>
-                    <Label htmlFor='name' className='text-left w-full'>
-                      Title
-                    </Label>
-                    <Input
-                      id='name'
-                      defaultValue='Pedro Duarte'
-                      className='col-span-3'
-                      {...field}
-                    />
-                    <Label htmlFor='username' className='text-left w-full'>
-                      Detail
-                    </Label>
-                    <Input
-                      id='username'
-                      defaultValue='@peduarte'
-                      className='col-span-3'
-                      {...field}
-                    />
-                  </div>
-                  <Separator orientation='vertical' className='mx-6' />
-                  <div className='flex flex-col justify-start items-center gap-4 w-1/2'>
-                    <Label htmlFor='email' className='text-left w-full'>
-                      Deadline
-                    </Label>
-                    <div className='flex w-full'>
-                      <CalendarForm date={date} setDate={setDate} />
-                    </div>
-                  </div>
+            <div className='flex py-4 h-[200px] w-full'>
+              <div className='flex flex-col justify-start items-center gap-4 w-1/2'>
+                <FormField
+                  control={form.control}
+                  name='title'
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel htmlFor='title' className='text-left w-full'>
+                        Title
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          id='title'
+                          defaultValue='Pedro Duarte'
+                          className='col-span-3'
+                          {...field}
+                        />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name='content'
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel htmlFor='content' className='text-left w-full'>
+                        Content
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          id='content'
+                          defaultValue='@peduarte'
+                          className='col-span-3'
+                          {...field}
+                          value={field.value ?? ''}
+                        />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name='label'
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>
+                        <Label htmlFor='label' className='text-left w-full'>
+                          Label
+                        </Label>
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          id='label'
+                          defaultValue='@peduarte'
+                          className='col-span-3'
+                          {...field}
+                          value={field.value ?? ''}
+                        />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+              </div>
+              <Separator orientation='vertical' className='mx-6' />
+              <div className='flex flex-col justify-start items-center gap-4 w-1/2'>
+                <Label htmlFor='email' className='text-left w-full'>
+                  Deadline
+                </Label>
+                <div className='flex w-full'>
+                  <CalendarForm date={date} setDate={setDate} />
                 </div>
-              )}
-            />
+              </div>
+            </div>
             <DialogFooter>
               <Button type='submit'>Save changes</Button>
             </DialogFooter>
