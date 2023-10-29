@@ -6,7 +6,6 @@ import { useState } from 'react'
 import { TodoOnAppType } from '@/services/schema/todo'
 import { CreateTodoReqType } from '@/services/schema/todo/create'
 import { DeleteTodoReqType } from '@/services/schema/todo/delete'
-import { GetTodoReqType } from '@/services/schema/todo/read'
 import { UpdateTodoReqType } from '@/services/schema/todo/update'
 import { trpc } from '@/utils/trpc'
 
@@ -24,9 +23,9 @@ export default function ApiDemoPage2() {
     endTime: null,
     label: '',
   })
-  const getTodoParam: GetTodoReqType = {
-    id: 1,
-  }
+  // const getTodoParam: GetTodoReqType = {
+  //   id: 1,
+  // }
   const [updateTodoParam, setUpdateTodoParam] = useState<UpdateTodoReqType>({
     id: -1,
     title: '',
