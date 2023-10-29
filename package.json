@@ -33,6 +33,7 @@
     ]
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.438.0",
     "@aws-sdk/credential-providers": "^3.438.0",
     "@aws-sdk/s3-presigned-post": "^3.438.0",
     "@aws-sdk/s3-request-presigner": "^3.438.0",
