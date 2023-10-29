@@ -112,6 +112,7 @@ export const toTodoOnApp = (todo: Todo): TodoOnAppType => {
     endTime: todo.endTime,
     label: todo.label,
     status: todo.status,
+    order: todo.order,
     userId: todo.userId,
   }
 }
