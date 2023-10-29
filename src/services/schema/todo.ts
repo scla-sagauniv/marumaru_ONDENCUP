@@ -1,4 +1,4 @@
-import { Status } from '@prisma/client'
+import { Status } from '@/../node_modules/.prisma/client'
 import { z } from 'zod'
 
 export const TodoOnApp = z.object({

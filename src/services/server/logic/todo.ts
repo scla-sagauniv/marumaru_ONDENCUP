@@ -1,4 +1,4 @@
-import { PrismaClient, Todo, User } from '@prisma/client'
+import { PrismaClient, Todo, User } from '@/../node_modules/.prisma/client'
 
 import { TodoOnAppType } from '@/services/schema/todo'
 import { CreateTodoReqType } from '@/services/schema/todo/create'
