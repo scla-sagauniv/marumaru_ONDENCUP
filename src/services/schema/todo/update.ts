@@ -1,4 +1,4 @@
-import { Status } from '@/../node_modules/.prisma/client'
+import { Status } from '@prisma/client'
 import { z } from 'zod'
 
 import { TodoOnApp } from '../todo'

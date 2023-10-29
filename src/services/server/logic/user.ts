@@ -1,4 +1,4 @@
-import { PrismaClient, User } from '@/../node_modules/.prisma/client'
+import { PrismaClient, User } from '@prisma/client'
 
 import { SignUpReqType } from '@/services/schema/auth/signUp'
 import { UserOnAppType } from '@/services/schema/user'
