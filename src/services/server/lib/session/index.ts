@@ -14,14 +14,16 @@ type NextSessionInstance = ReturnType<typeof nextSession>
 type GetSessionArgs = Parameters<NextSessionInstance>
 type GetSessionReturn = Pick<Awaited<ReturnType<NextSessionInstance>>, 'cookie' | 'id'>
 
+export const redisClient = new Redis(
+  process.env.REDIS_URL ? `${process.env.REDIS_URL}/0` : 'redis://127.0.0.1:6379/0',
+)
+
 export const getSession: (
   ...args: GetSessionArgs
 ) => Promise<GetSessionReturn & AppSession> = nextSession({
   store: promisifyStore(
     new RedisStore({
-      client: new Redis(
-        process.env.REDIS_URL ? process.env.REDIS_URL : 'redis://127.0.0.1:6379',
-      ),
+      client: redisClient,
     }),
   ),
   cookie: {
