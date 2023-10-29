@@ -21,7 +21,6 @@ export const TrpcProvider = ({ children }: TrpcProviderProps) => {
       transformer: SuperJSON,
     }),
   )
-
   return (
     <trpc.Provider client={trpcClient} queryClient={queryClient}>
       <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>

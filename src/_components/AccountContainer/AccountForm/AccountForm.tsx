@@ -1,8 +1,10 @@
 'use client'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useQueryClient } from '@tanstack/react-query'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
+import { useDispatch } from 'react-redux'
 
 import { Button } from '@/_components/ui/button'
 import {
@@ -16,6 +18,7 @@ import {
 } from '@/_components/ui/form'
 import { Input } from '@/_components/ui/input'
 import { toast } from '@/_components/ui/use-toast'
+import { updateUser } from '@/lib/state/slices'
 import {
   UpdateUserInfoReq,
   UpdateUserInfoReqType,
@@ -25,21 +28,24 @@ import { trpc } from '@/utils/trpc'
 import { useUploadImage } from '../hooks/useUpload'
 
 export function AccountForm({
-  userId,
-  name,
-  avatarUrl,
+  userId, // name,
 }: {
   userId: string | string[] | undefined
-  name: string
-  avatarUrl: string
 }) {
   const router = useRouter()
-  const updateUserMutation = trpc.user.updateUserInfo.useMutation()
+  const dispatch = useDispatch()
+  const queryClient = useQueryClient()
+  const updateUserMutation = trpc.user.updateUserInfo.useMutation({
+    onSuccess: () => {
+      queryClient.invalidateQueries()
+    },
+  })
+  const { data } = trpc.auth.fetchUser.useQuery()
 
   const form = useForm<UpdateUserInfoReqType>({
     resolver: zodResolver(UpdateUserInfoReq),
     defaultValues: {
-      name: name,
+      name: data?.user?.name,
     },
   })
 
@@ -47,7 +53,7 @@ export function AccountForm({
     register: form.register,
     setValue: form.setValue,
     name: 'avatarUrl',
-    defaultImageUrl: avatarUrl,
+    defaultImageUrl: data?.user?.name,
     onRejected: (error) => {
       toast({
         title: 'Error',
@@ -70,6 +76,13 @@ export function AccountForm({
 
   async function onSubmit(data: UpdateUserInfoReqType) {
     await updateUserMutation.mutateAsync(data)
+    dispatch(
+      updateUser(
+        Object.fromEntries(
+          Object.entries(data).filter(([_, value]) => value !== undefined),
+        ),
+      ),
+    )
     toast({
       title: 'You submitted the following values:',
       description: (
