@@ -33,10 +33,6 @@ export function AccountForm({
   name: string
   avatarUrl: string
 }) {
-  console.log('************')
-  console.log(avatarUrl)
-  console.log('************')
-
   const router = useRouter()
   const updateUserMutation = trpc.user.updateUserInfo.useMutation()
 
@@ -140,11 +136,7 @@ export function AccountForm({
 
         {imageUrl && (
           <Image
-            src={
-              avatarUrl == 'https://http.cat/101'
-                ? avatarUrl
-                : `https://d1qml5tdie7qey.cloudfront.net/${imageUrl}`
-            }
+            src={`https://d1qml5tdie7qey.cloudfront.net/${imageUrl}`}
             alt=''
             width={100}
             height={100}
