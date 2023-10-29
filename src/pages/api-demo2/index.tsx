@@ -50,7 +50,7 @@ export default function ApiDemoPage2() {
     console.log(res)
     setCreateTodoInfo(res.todo)
   }
-  const todos = trpc.todo.getTodo.useQuery(getTodoParam)
+  const todos = trpc.todo.getTodo.useQuery()
   console.log('todos', todos)
 
   const updateTodoMutation = trpc.todo.updateTodo.useMutation()

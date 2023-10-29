@@ -1,6 +1,6 @@
 import { CreateTodoReq, CreateTodoResType } from '@/services/schema/todo/create'
 import { DeleteTodoReq, DeleteTodoResType } from '@/services/schema/todo/delete'
-import { GetTodoReq, GetTodoResType } from '@/services/schema/todo/read'
+import { GetTodoResType } from '@/services/schema/todo/read'
 import { UpdateTodoReq, UpdateTodoResType } from '@/services/schema/todo/update'
 import { procedure, router } from '@/services/server/trpc'
 
@@ -18,13 +18,16 @@ export const todoRouter = router({
       const todoOnApp = todoLogic.toTodoOnApp(todo)
       return { todo: todoOnApp }
     }),
-  getTodo: procedure
-    .input(GetTodoReq)
-    .query(async ({ ctx, input }): Promise<GetTodoResType> => {
-      const todos = await todoLogic.getAllTodo(input.id, ctx.prisma)
-      const todoList = todos.map((todo) => todoLogic.toTodoOnApp(todo))
-      return { todo: todoList }
-    }),
+  getTodo: procedure.query(async ({ ctx }): Promise<GetTodoResType> => {
+    const user = ctx.session.user
+    if (!user) {
+      throw new Error('User not found')
+    }
+    const id = user.id
+    const todos = await todoLogic.getAllTodo(id, ctx.prisma)
+    const todoList = todos.map((todo) => todoLogic.toTodoOnApp(todo))
+    return { todo: todoList }
+  }),
   updateTodo: procedure
     .input(UpdateTodoReq)
     .mutation(async ({ ctx, input }): Promise<UpdateTodoResType> => {

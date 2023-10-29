@@ -85,7 +85,7 @@ export function TodoModal({ children, todo }: TodoModalProps) {
                       <FormControl>
                         <Input
                           id='title'
-                          defaultValue='Pedro Duarte'
+                          defaultValue={todo?.title ?? ''}
                           className='col-span-3'
                           {...field}
                         />
@@ -104,7 +104,7 @@ export function TodoModal({ children, todo }: TodoModalProps) {
                       <FormControl>
                         <Input
                           id='content'
-                          defaultValue='@peduarte'
+                          defaultValue={todo?.content ?? ''}
                           className='col-span-3'
                           {...field}
                           value={field.value ?? ''}
@@ -126,7 +126,7 @@ export function TodoModal({ children, todo }: TodoModalProps) {
                       <FormControl>
                         <Input
                           id='label'
-                          defaultValue='@peduarte'
+                          defaultValue={todo?.label ?? ''}
                           className='col-span-3'
                           {...field}
                           value={field.value ?? ''}
