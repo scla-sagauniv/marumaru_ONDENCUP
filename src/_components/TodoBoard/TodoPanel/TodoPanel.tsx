@@ -16,7 +16,6 @@ import { useState } from 'react'
 
 import { Button } from '@/_components/ui/button'
 import { GetTodoType, GetTodosType } from '@/services/server/GetTodos'
-import { trpc } from '@/utils/trpc'
 
 import { SortableContainer } from './SortableContainer'
 import { TodoItem } from './TodoItem'
@@ -36,8 +35,6 @@ export function TodoPanel({ todos }: TodoBoardProps) {
   const newTodos = todos.filter((todo) => todo.status === 'new')
   const doingTodos = todos.filter((todo) => todo.status === 'doing')
   const doneTodos = todos.filter((todo) => todo.status === 'done')
-
-  const createTodoMutation = trpc.todo.createTodo.useMutation()
 
   const [items, setItems] = useState<TodoContainers>({
     new: newTodos,
